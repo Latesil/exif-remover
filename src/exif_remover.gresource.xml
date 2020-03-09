@@ -2,5 +2,6 @@
 <gresources>
   <gresource prefix="/com/gitlab/Latesil/exif-remover">
     <file>window.ui</file>
+    <file>folder_box.ui</file>
   </gresource>
 </gresources>

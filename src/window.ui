@@ -47,13 +47,35 @@
     <property name="can_focus">False</property>
     <property name="default_width">600</property>
     <property name="default_height">300</property>
+    <signal name="destroy" handler="on_ExifRemoverWindow_destroy" swapped="no"/>
     <child>
       <object class="GtkBox" id="main_box">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <placeholder/>
+          <object class="GtkScrolledWindow" id="main_scrolled_window">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="shadow_type">in</property>
+            <child>
+              <object class="GtkViewport" id="main_viewport">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <child>
+                  <object class="GtkListBox" id="main_list_box">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
         </child>
         <child>
           <object class="GtkInfoBar" id="info_bar">
@@ -127,7 +149,7 @@
               <object class="GtkImage" id="add_image">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="stock">gtk-add</property>
+                <property name="icon_name">list-add-symbolic</property>
               </object>
             </child>
           </object>

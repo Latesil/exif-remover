@@ -29,6 +29,7 @@ exif_remover_sources = [
   '__init__.py',
   'main.py',
   'window.py',
+  'folder_box.py',
 ]
 
 install_data(exif_remover_sources, install_dir: moduledir)
