@@ -7,12 +7,20 @@
     <property name="can_focus">False</property>
     <property name="homogeneous">True</property>
     <child>
-      <object class="GtkLabel" id="folder_box_label">
+      <object class="GtkEventBox" id="folder_box_event_box">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="margin_start">5</property>
-        <property name="margin_end">5</property>
-        <property name="label" translatable="yes">Label text</property>
+        <signal name="button-press-event" handler="on_folder_box_event_box_button_press_event" swapped="no"/>
+        <child>
+          <object class="GtkLabel" id="folder_box_label">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="margin_start">5</property>
+            <property name="margin_end">5</property>
+            <property name="label" translatable="yes">Label text</property>
+            <signal name="button-release-event" handler="on_folder_box_label_button_release_event" swapped="no"/>
+          </object>
+        </child>
       </object>
       <packing>
         <property name="expand">False</property>
@@ -35,4 +43,8 @@
       </packing>
     </child>
   </template>
+  <object class="GtkMenu" id="main_menu">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+  </object>
 </interface>

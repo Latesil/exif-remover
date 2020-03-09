@@ -1,6 +1,6 @@
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, Gio
+from gi.repository import Gtk, Gio, GLib, Gdk
 
 @Gtk.Template(resource_path='/com/gitlab/Latesil/exif-remover/folder_box.ui')
 class FolderBox(Gtk.Box):
@@ -8,6 +8,8 @@ class FolderBox(Gtk.Box):
     __gtype_name__ = "FolderBox"
 
     folder_box_label = Gtk.Template.Child()
+    folder_box_popover_menu = Gtk.Template.Child()
+    folder_box_event_box = Gtk.Template.Child()
 
     i = 0
 
@@ -20,6 +22,12 @@ class FolderBox(Gtk.Box):
         self.settings.set_int('folder-quantity', FolderBox.i)
         self.label = label
         self.folder_box_label.set_text(self.label)
+        self.output_folder = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PICTURES)
+
+    @Gtk.Template.Callback()
+    def on_folder_box_event_box_button_press_event(self, widget, event):
+        if event.button == 3:
+            self.get_parent().destroy()
 
     @Gtk.Template.Callback()
     def on_remove_exif_button_clicked(self, button):

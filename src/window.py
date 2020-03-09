@@ -63,13 +63,14 @@ class ExifRemoverWindow(Gtk.ApplicationWindow):
             new_row.set_visible(True)
             new_row.set_selectable(False)
             self.main_list_box.add(new_row)
+            print(len(self.main_list_box.get_children()))
             chooser.destroy()
         else:
             chooser.destroy()
 
     @Gtk.Template.Callback()
     def on_rename_checkbox_toggled(self, box):
-        print('on_rename_checkbox_toggled')
+        print('d')
 
     @Gtk.Template.Callback()
     def on_preferences_button_clicked(self, button):
@@ -89,5 +90,6 @@ class ExifRemoverWindow(Gtk.ApplicationWindow):
 
     @Gtk.Template.Callback()
     def on_ExifRemoverWindow_destroy(self, w):
-        self.settings.set_int('folder-quantity', 1)
+        self.settings.set_int('folder-quantity', 0)
+
         
