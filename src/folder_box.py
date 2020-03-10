@@ -1,6 +1,7 @@
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, Gio, GLib, Gdk
+gi.require_version('GExiv2', '0.10')
+from gi.repository import Gtk, Gio, GLib, GExiv2
 
 @Gtk.Template(resource_path='/com/gitlab/Latesil/exif-remover/folder_box.ui')
 class FolderBox(Gtk.Box):
@@ -17,12 +18,16 @@ class FolderBox(Gtk.Box):
         super().__init__(**kwargs)
 
         self.settings = Gio.Settings.new('com.gitlab.Latesil.exif-remover')
-
         FolderBox.i += 1
         self.settings.set_int('folder-quantity', FolderBox.i)
         self.label = label
         self.folder_box_event_box.get_child().set_text(self.label)
         self.output_folder = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PICTURES) + '/cleared'
+        self.destination_folder = Gio.File.new_for_path(self.output_folder)
+
+        if not GLib.file_test(self.output_folder, GLib.FileTest.EXISTS):
+            Gio.File.make_directory(self.destination_folder)
+
 
     @Gtk.Template.Callback()
     def on_folder_box_event_box_button_press_event(self, widget, event):
@@ -34,8 +39,32 @@ class FolderBox(Gtk.Box):
     @Gtk.Template.Callback()
     def on_remove_exif_button_clicked(self, button):
         folders, files = get_files_and_folders(self.label)
+        GExiv2.initialize()
         for f in files:
-            print(f)
+            try:
+                f_in = Gio.File.new_for_path(f)
+                f_out = Gio.File.new_for_path(self.output_folder + '/' + f_in.get_basename())
+                f_in.copy(f_out, Gio.FileCopyFlags.NONE)
+                exif = GExiv2.Metadata()
+                exif.open_path(f_in.get_path())
+                exif.clear_comment()
+                exif.clear_exif()
+                exif.clear_iptc()
+                exif.clear_xmp()
+                exif.delete_gps_info()
+
+                #TODO
+                #exif.erase_exif_thumbnail()
+
+                exif.clear()
+                exif.save_file(f_out.get_path())
+
+            except GLib.Error as err:
+                print('%s: %s in file: %s (code: %s)' % (err.domain, err.message, f, err.code))
+                if err.code == 2: #file exists
+                    continue
+
+
 
 
 def get_files_and_folders(folder, absolute_folders_paths=True):
