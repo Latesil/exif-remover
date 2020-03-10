@@ -6,5 +6,10 @@
       <summary>Folder quantity</summary>
       <description>How many folders currently in the main screen</description>
     </key>
+	  <key type="s" name="output-filename">
+      <default>"image"</default>
+      <summary>Output filename</summary>
+      <description>Prefix for output files</description>
+    </key>
 	</schema>
 </schemalist>

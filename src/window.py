@@ -44,7 +44,7 @@ class ExifRemoverWindow(Gtk.ApplicationWindow):
 
         self.settings = Gio.Settings.new('com.gitlab.Latesil.exif-remover')
 
-        self.info_bar.props.revealed = False
+        self.settings.connect("changed::folder-quantity", self.on_folder_quantity_changed, None)
 
     @Gtk.Template.Callback()
     def on_add_button_clicked(self, button):
@@ -90,5 +90,13 @@ class ExifRemoverWindow(Gtk.ApplicationWindow):
     @Gtk.Template.Callback()
     def on_ExifRemoverWindow_destroy(self, w):
         self.settings.set_int('folder-quantity', 0)
+
+
+
+    def on_folder_quantity_changed(self, settings, key, button):
+        if settings.get_int(key) > 0:
+            self.info_bar.props.revealed = False
+        else:
+            self.info_bar.props.revealed = True
 
         
