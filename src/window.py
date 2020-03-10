@@ -63,7 +63,6 @@ class ExifRemoverWindow(Gtk.ApplicationWindow):
             new_row.set_visible(True)
             new_row.set_selectable(False)
             self.main_list_box.add(new_row)
-            print(len(self.main_list_box.get_children()))
             chooser.destroy()
         else:
             chooser.destroy()

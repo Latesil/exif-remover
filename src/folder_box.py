@@ -8,7 +8,7 @@ class FolderBox(Gtk.Box):
     __gtype_name__ = "FolderBox"
 
     folder_box_label = Gtk.Template.Child()
-    folder_box_popover_menu = Gtk.Template.Child()
+    remove_exif_button = Gtk.Template.Child()
     folder_box_event_box = Gtk.Template.Child()
 
     i = 0
@@ -21,7 +21,7 @@ class FolderBox(Gtk.Box):
         FolderBox.i += 1
         self.settings.set_int('folder-quantity', FolderBox.i)
         self.label = label
-        self.folder_box_label.set_text(self.label)
+        self.folder_box_event_box.get_child().set_text(self.label)
         self.output_folder = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PICTURES)
 
     @Gtk.Template.Callback()
@@ -35,4 +35,5 @@ class FolderBox(Gtk.Box):
 
         self.settings.set_int('folder-quantity', FolderBox.i)
         self.get_parent().destroy()
+
     
