@@ -18,7 +18,7 @@
 from locale import gettext as _
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, Gio
+from gi.repository import Gtk, Gio, GObject
 
 from .folder_box import FolderBox
 
@@ -69,23 +69,23 @@ class ExifRemoverWindow(Gtk.ApplicationWindow):
 
     @Gtk.Template.Callback()
     def on_rename_checkbox_toggled(self, box):
-        print('d')
+        print(self.settings.get_string('output-filename'))
 
     @Gtk.Template.Callback()
     def on_preferences_button_clicked(self, button):
         preferences = self.preferences_dialog
         preferences.run()
-        preferences.destroy()
+        preferences.hide()
 
     @Gtk.Template.Callback()
     def on_about_button_clicked(self, button):
         about = self.about_dialog
         about.run()
-        about.destroy()
+        about.hide()
 
     @Gtk.Template.Callback()
     def on_rename_entry_changed(self, entry):
-        print(entry.get_text())
+        self.settings.set_string('output-filename', entry.get_text())
 
     @Gtk.Template.Callback()
     def on_ExifRemoverWindow_destroy(self, w):

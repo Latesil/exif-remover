@@ -1,7 +1,7 @@
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('GExiv2', '0.10')
-from gi.repository import Gtk, Gio, GLib, GExiv2
+from gi.repository import Gtk, Gio, GLib, GExiv2, GObject
 
 @Gtk.Template(resource_path='/com/gitlab/Latesil/exif-remover/folder_box.ui')
 class FolderBox(Gtk.Box):
@@ -43,7 +43,11 @@ class FolderBox(Gtk.Box):
         for f in files:
             try:
                 f_in = Gio.File.new_for_path(f)
-                f_out = Gio.File.new_for_path(self.output_folder + '/' + f_in.get_basename())
+
+                #TODO
+                name = f_in.get_basename()
+
+                f_out = Gio.File.new_for_path(self.output_folder + '/' + name)
                 f_in.copy(f_out, Gio.FileCopyFlags.NONE)
                 exif = GExiv2.Metadata()
                 exif.open_path(f_in.get_path())
@@ -63,6 +67,13 @@ class FolderBox(Gtk.Box):
                 print('%s: %s in file: %s (code: %s)' % (err.domain, err.message, f, err.code))
                 if err.code == 2: #file exists
                     continue
+
+        #wtf is this?
+        infobar = self.get_parent().get_parent().get_parent().get_parent().get_parent().get_children()[1]
+        label = infobar.get_children()[0].get_children()[0].get_children()[0].get_children()[0]
+
+        label.set_text('Done')
+        infobar.props.revealed = True
 
 
 
