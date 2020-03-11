@@ -24,6 +24,7 @@ class FolderBox(Gtk.Box):
         self.folder_box_event_box.get_child().set_text(self.label)
         self.output_folder = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PICTURES) + '/cleared'
         self.destination_folder = Gio.File.new_for_path(self.output_folder)
+        self.skipped = False
 
         if not GLib.file_test(self.output_folder, GLib.FileTest.EXISTS):
             Gio.File.make_directory(self.destination_folder)
@@ -38,35 +39,51 @@ class FolderBox(Gtk.Box):
 
     @Gtk.Template.Callback()
     def on_remove_exif_button_clicked(self, button):
+        skipped = False
+        n = 1
         folders, files = get_files_and_folders(self.label)
         GExiv2.initialize()
         for f in files:
-            try:
-                f_in = Gio.File.new_for_path(f)
+            #create gio input file
+            f_in = Gio.File.new_for_path(f)
 
-                #TODO
+            #check if need to rename and correct name
+            if self.settings.get_boolean('rename'):
+                if self.settings.get_string("output-filename") == "":
+                    self.settings.reset('output-filename')
+                name = self.settings.get_string('output-filename') + "_" + str(n)
+            else:
                 name = f_in.get_basename()
 
-                f_out = Gio.File.new_for_path(self.output_folder + '/' + name)
+            #create gio output file
+            f_out = Gio.File.new_for_path(self.output_folder + '/' + name)
+
+            try:
                 f_in.copy(f_out, Gio.FileCopyFlags.NONE)
-                exif = GExiv2.Metadata()
-                exif.open_path(f_in.get_path())
-                exif.clear_comment()
-                exif.clear_exif()
-                exif.clear_iptc()
-                exif.clear_xmp()
-                exif.delete_gps_info()
-
-                #TODO
-                #exif.erase_exif_thumbnail()
-
-                exif.clear()
-                exif.save_file(f_out.get_path())
-
             except GLib.Error as err:
-                print('%s: %s in file: %s (code: %s)' % (err.domain, err.message, f, err.code))
                 if err.code == 2: #file exists
+                    self.skipped = True
                     continue
+
+                #print('%s: %s in file: %s (code: %s)' % (err.domain, err.message, f, err.code))
+            exif = GExiv2.Metadata()
+            exif.open_path(f_in.get_path())
+
+            exif.clear_comment()
+            exif.clear_exif()
+            exif.clear_iptc()
+            exif.clear_xmp()
+            exif.delete_gps_info()
+
+            #TODO
+            #exif.erase_exif_thumbnail()
+
+            exif.clear()
+            exif.save_file(f_out.get_path())
+            n += 1
+
+        if self.skipped:
+            print('Some files were skipped')
 
         #wtf is this?
         infobar = self.get_parent().get_parent().get_parent().get_parent().get_parent().get_children()[1]

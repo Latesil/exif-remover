@@ -11,5 +11,10 @@
       <summary>Output filename</summary>
       <description>Prefix for output files</description>
     </key>
+	  <key type="b" name="rename">
+      <default>false</default>
+      <summary>Should files be renamed</summary>
+      <description>Determine whether files should be renamed. Renaming files is a process of adding quantity prefix at the end of the filename</description>
+    </key>
 	</schema>
 </schemalist>

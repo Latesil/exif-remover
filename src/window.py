@@ -46,6 +46,11 @@ class ExifRemoverWindow(Gtk.ApplicationWindow):
 
         self.settings.connect("changed::folder-quantity", self.on_folder_quantity_changed, None)
 
+        if self.settings.get_string("output-filename") == "":
+            self.settings.reset('output-filename')
+
+        self.rename_checkbox.set_active(self.settings.get_boolean("rename"))
+
     @Gtk.Template.Callback()
     def on_add_button_clicked(self, button):
         chooser = Gtk.FileChooserDialog(title=_("Open Folder"),
@@ -69,11 +74,17 @@ class ExifRemoverWindow(Gtk.ApplicationWindow):
 
     @Gtk.Template.Callback()
     def on_rename_checkbox_toggled(self, box):
-        print(self.settings.get_string('output-filename'))
+        if box.get_active():
+            self.settings.set_boolean('rename', True)
+            print('t')
+        else:
+            self.settings.set_boolean('rename', False)
+            print('n')
 
     @Gtk.Template.Callback()
     def on_preferences_button_clicked(self, button):
         preferences = self.preferences_dialog
+        self.rename_entry.set_text(self.settings.get_string('output-filename'))
         preferences.run()
         preferences.hide()
 
