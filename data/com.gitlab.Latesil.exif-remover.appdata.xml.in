@@ -4,5 +4,6 @@
 	<metadata_license>CC0-1.0</metadata_license>
 	<project_license>GPL-3.0-or-later</project_license>
 	<description>
+		Program for removing EXIF data from photos
 	</description>
 </component>
