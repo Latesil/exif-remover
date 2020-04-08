@@ -1,7 +1,0 @@
-[Desktop Entry]
-Name=exif-remover
-Exec=exif-remover
-Terminal=false
-Type=Application
-Categories=GTK;
-StartupNotify=true
