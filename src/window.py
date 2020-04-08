@@ -18,7 +18,7 @@
 from locale import gettext as _
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, Gio, GObject
+from gi.repository import Gtk, Gio, GLib
 
 from .folder_box import FolderBox
 
@@ -28,6 +28,8 @@ class ExifRemoverWindow(Gtk.ApplicationWindow):
     __gtype_name__ = 'ExifRemoverWindow'
 
     add_button = Gtk.Template.Child()
+    open_folder_button = Gtk.Template.Child()
+    open_output_folder_button = Gtk.Template.Child()
     rename_checkbox = Gtk.Template.Child()
     preferences_button = Gtk.Template.Child()
     about_button = Gtk.Template.Child()
@@ -76,10 +78,8 @@ class ExifRemoverWindow(Gtk.ApplicationWindow):
     def on_rename_checkbox_toggled(self, box):
         if box.get_active():
             self.settings.set_boolean('rename', True)
-            print('t')
         else:
             self.settings.set_boolean('rename', False)
-            print('n')
 
     @Gtk.Template.Callback()
     def on_preferences_button_clicked(self, button):
@@ -101,6 +101,16 @@ class ExifRemoverWindow(Gtk.ApplicationWindow):
     @Gtk.Template.Callback()
     def on_ExifRemoverWindow_destroy(self, w):
         self.settings.set_int('folder-quantity', 0)
+
+    @Gtk.Template.Callback()
+    def on_open_folder_button_clicked(self, btn):
+        folder = getattr(btn, 'folder')
+        GLib.spawn_async(['/usr/bin/xdg-open', folder])
+
+    @Gtk.Template.Callback()
+    def on_open_output_folder_button_clicked(self, btn):
+        folder = getattr(btn, 'output_folder')
+        GLib.spawn_async(['/usr/bin/xdg-open', folder])
 
 
 

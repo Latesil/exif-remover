@@ -78,8 +78,15 @@ class FolderBox(Gtk.Box):
         #wtf is this?
         infobar = self.get_parent().get_parent().get_parent().get_parent().get_parent().get_children()[1]
         label = infobar.get_children()[0].get_children()[0].get_children()[0].get_children()[0]
+        button_box = infobar.get_children()[0].get_children()[0].get_children()[1].get_children()[0].get_children()
+        button = button_box[0]
+        result_button = button_box[1]
 
         label.set_text('Done')
+        setattr(button, 'folder', self.label)
+        setattr(result_button, 'output_folder', self.output_folder)
+        button.set_visible(True)
+        result_button.set_visible(True)
         infobar.props.revealed = True
 
 
