@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop">
-	<id>com.gitlab.Latesil.exif-remover.desktop</id>
-	<metadata_license>CC0-1.0</metadata_license>
-	<project_license>GPL-3.0-or-later</project_license>
-	<description>
-		Program for removing EXIF data from photos
-	</description>
+  <id>com.gitlab.Latesil.exif-remover</id>
+  <metadata_license>CC0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <name>EXIF Remover</name>
+  <summary>Remove EXIF metadata from your photos</summary>
+  <description>
+    <p>Simple program for removing EXIF metadata from your photos</p>
+  </description>
+  <provides>
+    <binary>exif-remover</binary>
+  </provides>
+  <developer_name>Lateseal</developer_name>
+  <url type="homepage">https://gitlab.com/Latesil/exif-remover</url>
+  <url type="bugtracker">https://gitlab.com/Latesil/exif-remover/-/issues</url>
 </component>
