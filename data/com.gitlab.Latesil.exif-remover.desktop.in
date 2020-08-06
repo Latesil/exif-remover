@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=exif-remover
+Comment=Simple program for removing EXIF metadata from your photos
 Exec=exif-remover
 Terminal=false
 Type=Application
