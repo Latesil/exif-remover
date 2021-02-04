@@ -5,7 +5,7 @@ from gi.repository import Gtk, Gio, GLib, GExiv2
 
 from .helpers import get_files_and_folders, clear_metadata
 
-@Gtk.Template(resource_path='/com/gitlab/Latesil/exif-remover/folder_box.ui')
+@Gtk.Template(resource_path='/com/github/Latesil/exif-remover/folder_box.ui')
 class FolderBox(Gtk.Box):
 
     __gtype_name__ = "FolderBox"
@@ -19,7 +19,7 @@ class FolderBox(Gtk.Box):
     def __init__(self, label, **kwargs):
         super().__init__(**kwargs)
 
-        self.settings = Gio.Settings.new('com.gitlab.Latesil.exif-remover')
+        self.settings = Gio.Settings.new('com.github.Latesil.exif-remover')
         FolderBox.i += 1
         self.settings.set_int('folder-quantity', FolderBox.i)
         self.label = label

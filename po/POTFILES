@@ -1,6 +1,6 @@
-data/com.gitlab.Latesil.exif-remover.desktop.in
-data/com.gitlab.Latesil.exif-remover.appdata.xml.in
-data/com.gitlab.Latesil.exif-remover.gschema.xml
+data/com.github.Latesil.exif-remover.desktop.in
+data/com.github.Latesil.exif-remover.appdata.xml.in
+data/com.github.Latesil.exif-remover.gschema.xml
 src/window.ui
 src/main.py
 src/window.py

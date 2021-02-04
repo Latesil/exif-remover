@@ -27,7 +27,7 @@ from .window import ExifRemoverWindow
 
 class Application(Gtk.Application):
     def __init__(self):
-        super().__init__(application_id='com.gitlab.Latesil.exif-remover',
+        super().__init__(application_id='com.github.Latesil.exif-remover',
                          flags=Gio.ApplicationFlags.FLAGS_NONE)
 
     def do_activate(self):

@@ -23,7 +23,7 @@ from gi.repository import Gtk, Gio, GLib
 from .folder_box import FolderBox
 
 
-@Gtk.Template(resource_path='/com/gitlab/Latesil/exif-remover/window.ui')
+@Gtk.Template(resource_path='/com/github/Latesil/exif-remover/window.ui')
 class ExifRemoverWindow(Gtk.ApplicationWindow):
     __gtype_name__ = 'ExifRemoverWindow'
 
@@ -44,7 +44,7 @@ class ExifRemoverWindow(Gtk.ApplicationWindow):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.settings = Gio.Settings.new('com.gitlab.Latesil.exif-remover')
+        self.settings = Gio.Settings.new('com.github.Latesil.exif-remover')
 
         self.settings.connect("changed::folder-quantity", self.on_folder_quantity_changed, None)
 

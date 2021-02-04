@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="exif-remover">
-	<schema id="com.gitlab.Latesil.exif-remover" path="/com/gitlab/Latesil/exif-remover/">
+	<schema id="com.github.Latesil.exif-remover" path="/com/github/Latesil/exif-remover/">
 	  <key type="i" name="folder-quantity">
       <default>0</default>
       <summary>Folder quantity</summary>
