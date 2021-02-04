@@ -1,2 +1,4 @@
 .git/
 .flatpak-builder/
+builddir/
+build-dir/
