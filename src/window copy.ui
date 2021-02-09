@@ -64,7 +64,7 @@
     <property name="can_focus">False</property>
     <property name="default_width">800</property>
     <property name="default_height">600</property>
-    <property name="title" translatable="yes">EXIF Remover</property>
+    <property name="title" translatable="yes">Exif Remover</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
@@ -81,23 +81,14 @@
                 <property name="visible">True</property>
                 <property name="hexpand">False</property>
                 <property name="can_focus">False</property>
-                <property name="title" translatable="yes">EXIF Remover</property>
+                <property name="title" translatable="yes">Exif Remover</property>
                 <property name="show_close_button">True</property>
                 <child>
-                  <object class="GtkButton" id="add_button">
+                  <object class="GtkButton">
+                    <property name="label">gtk-add</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="halign">center</property>
-                    <property name="valign">center</property>
-                    <property name="tooltip_text" translatable="yes">Add new</property>
-                    <child>
-                      <object class="GtkImage">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="icon_name">list-add-symbolic</property>
-                        <property name="icon_size">1</property>
-                      </object>
-                    </child>
+                    <property name="can-focus">True</property>
+                    <property name="use-stock">True</property>
                     <style>
                       <class name="suggested-action"/>
                     </style>
@@ -144,15 +135,110 @@
               <object class="HdyHeaderBar" id="right_header">
                 <property name="visible">True</property>
                 <property name="hexpand">True</property>
+                <property name="title" translatable="yes">Right Header</property>
                 <property name="show_close_button">True</property>
-                <property name="title">Right title</property>
                 <child>
                   <object class="GtkRevealer" id="back_revealer">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="transition-type">slide-right</property>
                     <property name="transition-duration" bind-source="content_box" bind-property="mode-transition-duration" bind-flags="bidirectional|sync-create"/>
+                    <child>
+                      <object class="GtkButton" id="back">
+                        <property name="visible">True</property>
+                        <property name="valign">center</property>
+                        <property name="use-underline">True</property>
+                        <signal name="clicked" handler="on_back_clicked"/>
+                        <style>
+                          <class name="image-button"/>
+                        </style>
+                        <child internal-child="accessible">
+                          <object class="AtkObject" id="a11y-back">
+                            <property name="accessible-name" translatable="yes">Back</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkImage" id="back_image">
+                            <property name="visible">True</property>
+                            <property name="icon-name">go-previous-symbolic</property>
+                            <property name="icon-size">1</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
                   </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="cancel_button">
+                    <property name="visible">False</property>
+                    <property name="can_focus">True</property>
+                    <property name="focus_on_click">False</property>
+                    <property name="label" translatable="yes">_Cancel</property>
+                    <property name="use_underline">True</property>
+                    <property name="width_request">70</property>
+                    <property name="valign">center</property>
+                    <style>
+                      <class name="text-button"/>
+                    </style>
+                  </object>
+                  <packing>
+                    <property name="pack_type">start</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="favorite_button">
+                    <property name="visible">False</property>
+                    <property name="can_focus">True</property>
+                    <property name="focus_on_click">False</property>
+                    <property name="valign">center</property>
+                    <signal name="toggled" handler="on_favorite_button_toggled"/>
+                    <child>
+                      <object class="GtkImage">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="icon_name">starred-symbolic</property>
+                        <property name="icon_size">1</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="pack_type">end</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkMenuButton" id="contact_menu_button">
+                    <property name="visible">False</property>
+                    <property name="can_focus">True</property>
+                    <property name="focus_on_click">False</property>
+                    <child>
+                      <object class="GtkImage">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="icon_name">view-more-symbolic</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="pack_type">end</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="done_button">
+                    <property name="visible">False</property>
+                    <property name="can_focus">True</property>
+                    <property name="focus_on_click">False</property>
+                    <property name="label" translatable="yes">Done</property>
+                    <property name="width_request">70</property>
+                    <property name="valign">center</property>
+                    <style>
+                      <class name="text-button"/>
+                    </style>
+                  </object>
+                  <packing>
+                    <property name="pack_type">end</property>
+                  </packing>
                 </child>
               </object>
               <packing>
@@ -170,6 +256,8 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="can-swipe-back">True</property>
+                <signal name="notify::folded" handler="on_folded" object="ExifRemoverWindow" after="yes" swapped="no"/>
+                <signal name="notify::child-transition-running" handler="on_child_transition_running" object="ExifRemoverWindow" after="yes" swapped="no"/>
                 <child>
                   <object class="GtkStack" id="list_pane_stack">
                     <property name="visible">True</property>
@@ -183,12 +271,24 @@
                         <property name="width_request">300</property>
                         <property name="homogeneous">True</property>
                         <child>
+                          <object class="GtkSpinner">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="active">True</property>
+                            <property name="valign">end</property>
+                            <property name="halign">center</property>
+                            <style>
+                              <class name="contacts-watermark"/>
+                            </style>
+                          </object>
+                        </child>
+                        <child>
                           <object class="GtkLabel" id="label1">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="valign">start</property>
                             <property name="halign">center</property>
-                            <property name="label" translatable="yes">List of folders</property>
+                            <property name="label" translatable="yes">Loading</property>
                             <style>
                               <class name="contacts-watermark"/>
                             </style>
@@ -229,31 +329,4 @@
       </object>
     </child>
   </template>
-  <object class="GtkSizeGroup" id="left_pane_size_group">
-    <property name="mode">horizontal</property>
-    <widgets>
-      <widget name="left_header"/>
-      <widget name="list_pane_stack"/>
-    </widgets>
-  </object>
-  <object class="GtkSizeGroup" id="right_pane_size_group">
-    <property name="mode">horizontal</property>
-    <widgets>
-      <widget name="right_header"/>
-      <widget name="contact_pane_container"/>
-    </widgets>
-  </object>
-  <object class="HdyHeaderGroup">
-    <property name="decorate-all" bind-source="content_box" bind-property="folded" bind-flags="sync-create"/>
-    <headerbars>
-      <headerbar name="left_header"/>
-      <headerbar name="right_header"/>
-    </headerbars>
-  </object>
-  <object class="HdySwipeGroup" id="swipe_group">
-    <swipeables>
-      <swipeable name="header"/>
-      <swipeable name="content_box"/>
-    </swipeables>
-  </object>
 </interface>
