@@ -18,13 +18,13 @@
 from locale import gettext as _
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, Gio, GLib
-
+gi.require_version('Handy', '1')
+from gi.repository import Gtk, Gio, GLib, Handy
 from .folder_box import FolderBox
 
 
 @Gtk.Template(resource_path='/com/github/Latesil/exif-remover/window.ui')
-class ExifRemoverWindow(Gtk.ApplicationWindow):
+class ExifRemoverWindow(Handy.ApplicationWindow):
     __gtype_name__ = 'ExifRemoverWindow'
 
     # add_button = Gtk.Template.Child()
@@ -112,12 +112,3 @@ class ExifRemoverWindow(Gtk.ApplicationWindow):
     #     folder = getattr(btn, 'output_folder')
     #     GLib.spawn_async(['/usr/bin/xdg-open', folder])
 
-
-
-    def on_folder_quantity_changed(self, settings, key, button):
-        if settings.get_int(key) > 0:
-            self.info_bar.props.revealed = False
-        else:
-            self.info_bar.props.revealed = True
-
-        

@@ -7,7 +7,6 @@ from typing import Tuple, List, Optional
 def get_files_and_folders(folder, absolute_folders_paths=True) -> Tuple[List[str], List[str]]:
     folder_list: List[str] = []
     files_list: List[str] = []
-
     path: Gio.File = Gio.File.new_for_path(folder)
     enumerator: Optional[Gio.FileEnumerator] = path.enumerate_children(Gio.FILE_ATTRIBUTE_STANDARD_NAME,
                                                                        Gio.FileQueryInfoFlags.NONE)
