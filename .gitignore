@@ -1,4 +1,5 @@
 .git/
 .flatpak-builder/
+.idea/
 builddir/
 build-dir/
