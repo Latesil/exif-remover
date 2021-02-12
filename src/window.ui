@@ -8,10 +8,10 @@
       <object class="GtkBox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="margin_left">5</property>
-        <property name="margin_right">5</property>
-        <property name="margin_top">5</property>
-        <property name="margin_bottom">5</property>
+        <property name="margin_left">10</property>
+        <property name="margin_right">10</property>
+        <property name="margin_top">10</property>
+        <property name="margin_bottom">10</property>
         <property name="orientation">vertical</property>
         <property name="homogeneous">True</property>
         <child>
@@ -55,6 +55,36 @@
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">2</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkPopover" id="folder_popover">
+    <property name="can_focus">False</property>
+    <property name="relative_to">folder_menu_button</property>
+    <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="margin_left">10</property>
+        <property name="margin_right">10</property>
+        <property name="margin_top">10</property>
+        <property name="margin_bottom">10</property>
+        <property name="orientation">vertical</property>
+        <property name="homogeneous">True</property>
+        <child>
+          <object class="GtkModelButton" id="clean_button">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="text" translatable="yes">Clean</property>
+            <!-- <signal name="clicked" handler="on_clean_button_clicked" swapped="no"/> -->
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
           </packing>
         </child>
       </object>
@@ -154,6 +184,24 @@
                     <property name="transition-duration" bind-source="content_box" bind-property="mode-transition-duration" bind-flags="bidirectional|sync-create"/>
                   </object>
                 </child>
+                <child>
+                  <object class="GtkMenuButton" id="folder_menu_button">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="focus_on_click">False</property>
+                    <property name="popover">folder_popover</property>
+                    <child>
+                      <object class="GtkImage">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="icon_name">view-more-symbolic</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="pack_type">end</property>
+                  </packing>
+                </child>
               </object>
               <packing>
                 <property name="name">contact-pane</property>
@@ -199,17 +247,6 @@
                   </object>
                   <packing>
                     <property name="name">list-pane</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkSeparator">
-                    <property name="visible">True</property>
-                    <style>
-                      <class name="sidebar"/>
-                    </style>
-                  </object>
-                  <packing>
-                    <property name="navigatable">False</property>
                   </packing>
                 </child>
                 <child>
