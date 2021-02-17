@@ -27,8 +27,7 @@ from .folder_box import FolderBox
 class ExifRemoverWindow(Handy.ApplicationWindow):
     __gtype_name__ = 'ExifRemoverWindow'
 
-    # add_button = Gtk.Template.Child()
-    # open_folder_button = Gtk.Template.Child()
+    content_box = Gtk.Template.Child()
     # open_output_folder_button = Gtk.Template.Child()
     # rename_checkbox = Gtk.Template.Child()
     # preferences_button = Gtk.Template.Child()
@@ -45,6 +44,9 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
         super().__init__(**kwargs)
 
         self.settings = Gio.Settings.new('com.github.Latesil.exif-remover')
+
+        if not self.content_box.props.folded:
+            print('unfolded')
 
         # self.settings.connect("changed::folder-quantity", self.on_folder_quantity_changed, None)
 

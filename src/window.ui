@@ -60,36 +60,6 @@
       </object>
     </child>
   </object>
-  <object class="GtkPopover" id="folder_popover">
-    <property name="can_focus">False</property>
-    <property name="relative_to">folder_menu_button</property>
-    <child>
-      <object class="GtkBox">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="margin_left">10</property>
-        <property name="margin_right">10</property>
-        <property name="margin_top">10</property>
-        <property name="margin_bottom">10</property>
-        <property name="orientation">vertical</property>
-        <property name="homogeneous">True</property>
-        <child>
-          <object class="GtkModelButton" id="clean_button">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <property name="text" translatable="yes">Clean</property>
-            <!-- <signal name="clicked" handler="on_clean_button_clicked" swapped="no"/> -->
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
-        </child>
-      </object>
-    </child>
-  </object>
   <template class="ExifRemoverWindow" parent="HdyApplicationWindow">
     <property name="can_focus">False</property>
     <property name="default_width">800</property>
@@ -103,9 +73,7 @@
           <object class="HdyLeaflet" id="header">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="mode-transition-duration" bind-source="content_box" bind-property="mode-transition-duration" bind-flags="bidirectional|sync-create"/>
-            <property name="child-transition-duration" bind-source="content_box" bind-property="child-transition-duration" bind-flags="bidirectional|sync-create"/>
-            <property name="transition-type" bind-source="content_box" bind-property="transition-type" bind-flags="bidirectional|sync-create"/>
+            <property name="hhomogeneous_unfolded">True</property>
             <child>
               <object class="HdyHeaderBar" id="left_header">
                 <property name="visible">True</property>
@@ -155,57 +123,6 @@
                   </packing>
                 </child>
               </object>
-              <packing>
-                <property name="name">list-pane</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkSeparator" id="header_separator">
-                <property name="visible">True</property>
-                <style>
-                  <class name="sidebar"/>
-                </style>
-              </object>
-              <packing>
-                <property name="navigatable">False</property>
-              </packing>
-            </child>
-            <child>
-              <object class="HdyHeaderBar" id="right_header">
-                <property name="visible">True</property>
-                <property name="hexpand">True</property>
-                <property name="show_close_button">True</property>
-                <property name="title">Right title</property>
-                <child>
-                  <object class="GtkRevealer" id="back_revealer">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="transition-type">slide-right</property>
-                    <property name="transition-duration" bind-source="content_box" bind-property="mode-transition-duration" bind-flags="bidirectional|sync-create"/>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkMenuButton" id="folder_menu_button">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="focus_on_click">False</property>
-                    <property name="popover">folder_popover</property>
-                    <child>
-                      <object class="GtkImage">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="icon_name">view-more-symbolic</property>
-                      </object>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="pack_type">end</property>
-                  </packing>
-                </child>
-              </object>
-              <packing>
-                <property name="name">contact-pane</property>
-              </packing>
             </child>
           </object>
         </child>
@@ -218,6 +135,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="can-swipe-back">True</property>
+                <property name="hhomogeneous_unfolded">True</property>
                 <child>
                   <object class="GtkStack" id="list_pane_stack">
                     <property name="visible">True</property>
@@ -245,19 +163,6 @@
                       </object>
                     </child>
                   </object>
-                  <packing>
-                    <property name="name">list-pane</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkOverlay" id="contact_pane_container">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="hexpand">True</property>
-                  </object>
-                  <packing>
-                    <property name="name">contact-pane</property>
-                  </packing>
                 </child>
               </object>
             </child>
@@ -266,31 +171,4 @@
       </object>
     </child>
   </template>
-  <object class="GtkSizeGroup" id="left_pane_size_group">
-    <property name="mode">horizontal</property>
-    <widgets>
-      <widget name="left_header"/>
-      <widget name="list_pane_stack"/>
-    </widgets>
-  </object>
-  <object class="GtkSizeGroup" id="right_pane_size_group">
-    <property name="mode">horizontal</property>
-    <widgets>
-      <widget name="right_header"/>
-      <widget name="contact_pane_container"/>
-    </widgets>
-  </object>
-  <object class="HdyHeaderGroup">
-    <property name="decorate-all" bind-source="content_box" bind-property="folded" bind-flags="sync-create"/>
-    <headerbars>
-      <headerbar name="left_header"/>
-      <headerbar name="right_header"/>
-    </headerbars>
-  </object>
-  <object class="HdySwipeGroup" id="swipe_group">
-    <swipeables>
-      <swipeable name="header"/>
-      <swipeable name="content_box"/>
-    </swipeables>
-  </object>
 </interface>
