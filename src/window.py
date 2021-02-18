@@ -49,12 +49,8 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
 
         self.settings = Gio.Settings.new('com.github.Latesil.exif-remover')
 
-        if not self.content_box.props.folded:
-            print('unfolded')
-
-        self.main_stack.connect("notify::visible-child", self._on_main_stack_visible_child_changed)
         start = StartView()
-
+        self.main_stack.connect("notify::visible-child", self._on_main_stack_visible_child_changed)
         self.main_stack.add_named(start, "startview")
 
         # self.settings.connect("changed::folder-quantity", self.on_folder_quantity_changed, None)
