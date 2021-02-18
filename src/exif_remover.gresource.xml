@@ -3,5 +3,6 @@
   <gresource prefix="/com/github/Latesil/exif-remover">
     <file>window.ui</file>
     <file>folder_box.ui</file>
+    <file>StartView.ui</file>
   </gresource>
 </gresources>

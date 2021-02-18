@@ -19,7 +19,8 @@ from locale import gettext as _
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('Handy', '1')
-from gi.repository import Gtk, Gio, GLib, Handy
+from gi.repository import Gtk, Gio, GLib, Handy, GObject
+from .start_view import StartView
 from .folder_box import FolderBox
 
 
@@ -27,7 +28,10 @@ from .folder_box import FolderBox
 class ExifRemoverWindow(Handy.ApplicationWindow):
     __gtype_name__ = 'ExifRemoverWindow'
 
+    active_view = GObject.Property(type=GObject.GObject, default=None)
+
     content_box = Gtk.Template.Child()
+    main_stack = Gtk.Template.Child()
     # open_output_folder_button = Gtk.Template.Child()
     # rename_checkbox = Gtk.Template.Child()
     # preferences_button = Gtk.Template.Child()
@@ -48,12 +52,20 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
         if not self.content_box.props.folded:
             print('unfolded')
 
+        self.main_stack.connect("notify::visible-child", self._on_main_stack_visible_child_changed)
+        start = StartView()
+
+        self.main_stack.add_named(start, "startview")
+
         # self.settings.connect("changed::folder-quantity", self.on_folder_quantity_changed, None)
 
         # if self.settings.get_string("output-filename") == "":
         #     self.settings.reset('output-filename')
 
         # self.rename_checkbox.set_active(self.settings.get_boolean("rename"))
+
+    def _on_main_stack_visible_child_changed(self, k, v):
+        self.props.active_view = self.main_stack.props.visible_child
 
     # @Gtk.Template.Callback()
     # def on_add_button_clicked(self, button):

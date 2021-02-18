@@ -31,6 +31,7 @@ exif_remover_sources = [
   'window.py',
   'folder_box.py',
   'helpers.py',
+  'start_view.py',
 ]
 
 install_data(exif_remover_sources, install_dir: moduledir)
