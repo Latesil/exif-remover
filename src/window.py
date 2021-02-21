@@ -21,6 +21,7 @@ gi.require_version('Gtk', '3.0')
 gi.require_version('Handy', '1')
 from gi.repository import Gtk, Gio, GLib, Handy, GObject
 from .start_view import StartView
+from .folders_view import FoldersView
 from .folder_box import FolderBox
 
 
@@ -35,7 +36,7 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
     # open_output_folder_button = Gtk.Template.Child()
     # rename_checkbox = Gtk.Template.Child()
     # preferences_button = Gtk.Template.Child()
-    # about_button = Gtk.Template.Child()
+    about_button = Gtk.Template.Child()
     # rename_entry = Gtk.Template.Child()
     # main_info_label = Gtk.Template.Child()
     # about_dialog = Gtk.Template.Child()
@@ -50,8 +51,10 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
         self.settings = Gio.Settings.new('com.github.Latesil.exif-remover')
 
         start = StartView()
+        folders_view = FoldersView()
         self.main_stack.connect("notify::visible-child", self._on_main_stack_visible_child_changed)
         self.main_stack.add_named(start, "startview")
+        self.main_stack.add_named(folders_view, "foldersview")
 
         # self.settings.connect("changed::folder-quantity", self.on_folder_quantity_changed, None)
 
@@ -63,8 +66,13 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
     def _on_main_stack_visible_child_changed(self, k, v):
         self.props.active_view = self.main_stack.props.visible_child
 
-    # @Gtk.Template.Callback()
-    # def on_add_button_clicked(self, button):
+    @Gtk.Template.Callback()
+    def on_add_button_clicked(self, button):
+        if self.props.active_view.get_name() != 'FoldersView':
+            self.main_stack.set_visible_child_name("foldersview")
+        else:
+            self.main_stack.set_visible_child_name("startview")
+
     #     chooser = Gtk.FileChooserDialog(title=_("Open Folder"),
     #                                     transient_for=self,
     #                                     action=Gtk.FileChooserAction.SELECT_FOLDER,

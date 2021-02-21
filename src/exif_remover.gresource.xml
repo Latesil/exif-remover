@@ -4,5 +4,6 @@
     <file>window.ui</file>
     <file>folder_box.ui</file>
     <file>StartView.ui</file>
+    <file>FoldersView.ui</file>
   </gresource>
 </gresources>

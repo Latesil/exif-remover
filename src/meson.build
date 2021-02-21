@@ -32,6 +32,7 @@ exif_remover_sources = [
   'folder_box.py',
   'helpers.py',
   'start_view.py',
+  'folders_view.py',
 ]
 
 install_data(exif_remover_sources, install_dir: moduledir)

@@ -88,6 +88,7 @@
                     <property name="halign">center</property>
                     <property name="valign">center</property>
                     <property name="tooltip_text" translatable="yes">Add new</property>
+                    <signal name="clicked" handler="on_add_button_clicked" swapped="no"/>
                     <child>
                       <object class="GtkImage">
                         <property name="visible">True</property>
@@ -141,6 +142,8 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="hexpand">False</property>
+                    <property name="transition-duration">200</property>
+                    <property name="transition-type">crossfade</property>
                   </object>
                 </child>
               </object>
