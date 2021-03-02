@@ -22,7 +22,7 @@ gi.require_version('Handy', '1')
 from gi.repository import Gtk, Gio, GLib, Handy, GObject
 from .start_view import StartView
 from .folders_view import FoldersView
-from .folder_box import FolderBox
+from .exif_folder import ExifFolder
 
 
 @Gtk.Template(resource_path='/com/github/Latesil/exif-remover/window.ui')
@@ -50,11 +50,11 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
 
         self.settings = Gio.Settings.new('com.github.Latesil.exif-remover')
 
-        start = StartView()
-        folders_view = FoldersView()
+        self.start = StartView()
+        self.folders_view = FoldersView()
         self.main_stack.connect("notify::visible-child", self._on_main_stack_visible_child_changed)
-        self.main_stack.add_named(start, "startview")
-        self.main_stack.add_named(folders_view, "foldersview")
+        self.main_stack.add_named(self.start, "startview")
+        self.main_stack.add_named(self.folders_view, "foldersview")
 
         # self.settings.connect("changed::folder-quantity", self.on_folder_quantity_changed, None)
 
@@ -68,29 +68,23 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
 
     @Gtk.Template.Callback()
     def on_add_button_clicked(self, button):
-        if self.props.active_view.get_name() != 'FoldersView':
-            self.main_stack.set_visible_child_name("foldersview")
+        chooser = Gtk.FileChooserDialog(title=_("Open Folder"),
+                                        transient_for=self,
+                                        action=Gtk.FileChooserAction.SELECT_FOLDER,
+                                        buttons=(_("Cancel"), Gtk.ResponseType.CANCEL,
+                                                 _("OK"), Gtk.ResponseType.OK))
+        response = chooser.run()
+        if response == Gtk.ResponseType.OK:
+            f = chooser.get_filename()
+            new_box = ExifFolder(f)
+            if self.props.active_view.get_name() != 'FoldersView':
+                self.main_stack.set_visible_child_name("foldersview")
+                self.folders_view.add_folder_to_view(new_box)
+            # else:
+            #     self.main_stack.set_visible_child_name("startview")
+            chooser.destroy()
         else:
-            self.main_stack.set_visible_child_name("startview")
-
-    #     chooser = Gtk.FileChooserDialog(title=_("Open Folder"),
-    #                                     transient_for=self,
-    #                                     action=Gtk.FileChooserAction.SELECT_FOLDER,
-    #                                     buttons=(_("Cancel"), Gtk.ResponseType.CANCEL,
-    #                                              _("OK"), Gtk.ResponseType.OK))
-    #     response = chooser.run()
-    #     if response == Gtk.ResponseType.OK:
-    #         f = chooser.get_filename()
-    #         new_box = FolderBox(f)
-    #         new_box.set_visible(True)
-    #         new_row = Gtk.ListBoxRow()
-    #         new_row.add(new_box)
-    #         new_row.set_visible(True)
-    #         new_row.set_selectable(False)
-    #         self.main_list_box.add(new_row)
-    #         chooser.destroy()
-    #     else:
-    #         chooser.destroy()
+            chooser.destroy()
 
     # @Gtk.Template.Callback()
     # def on_rename_checkbox_toggled(self, box):
