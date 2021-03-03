@@ -18,4 +18,12 @@ class ExifFolder(Gtk.Box):
 
     @Gtk.Template.Callback()
     def on_image_event_box_clicked(self, event, widget):
-        print('on_image_event_box_clicked')
+        GLib.spawn_async(['/usr/bin/xdg-open', self.path])
+
+    @Gtk.Template.Callback()
+    def on_close_exif_folder_clicked(self, button):
+        print('on_close_exif_folder_clicked')
+
+    @Gtk.Template.Callback()
+    def on_clear_exif_folder_clicked(self, button):
+        print('on_clear_exif_folder_clicked')
