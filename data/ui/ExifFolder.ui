@@ -24,6 +24,7 @@
                 <object class="GtkBox">
                   <property name="visible">True</property>
                   <property name="spacing">10</property>
+                  <property name="margin-bottom">20</property>
                   <child>
                     <object class="GtkEventBox" id="image_event_box">
                       <property name="visible">True</property>
@@ -52,12 +53,6 @@
                 </object>
               </child>
               <child>
-                <object class="GtkSeparator">
-                  <property name="visible">True</property>
-                  <property name="margin">10</property>
-                </object>
-              </child>
-              <child>
                 <object class="GtkBox">
                   <property name="visible">True</property>
                   <property name="orientation">vertical</property>
@@ -71,6 +66,7 @@
                           <property name="use_underline">True</property>
                           <property name="title">Files:</property>
                           <property name="subtitle">56</property>
+                          <property name="icon-name">image-x-generic</property>
                           <property name="activatable-widget">show_files_button</property>
                           <child>
                             <object class="GtkButton" id="show_files_button">
@@ -90,10 +86,10 @@
                           <property name="visible">True</property>
                           <property name="selectable">False</property>
                           <property name="use_underline">True</property>
+                          <property name="icon-name">preferences-system</property>
                           <property name="title">Output:</property>
-                          <property name="activatable-widget">change_output_button</property>
                           <child>
-                            <object class="GtkComboBoxText" id="change_output_button">
+                            <object class="GtkComboBoxText" id="change_output_box">
                               <property name="visible">True</property>
                               <property name="can-focus">False</property>
                               <property name="halign">end</property>
@@ -104,16 +100,16 @@
                                 <item id="0" translatable="yes">Same Folder</item>
                                 <item id="1" translatable="yes">Different Folder</item>
                               </items>
-                              <signal name="changed" handler="on_change_output_button_changed" swapped="no"/>
+                              <signal name="changed" handler="on_change_output_box_changed" swapped="no"/>
                             </object>
                           </child>
                         </object>
                       </child>
                       <child>
-                        <object class="HdyActionRow">
-                          <property name="visible">True</property>
+                        <object class="HdyActionRow" id="set_folder_row">
                           <property name="selectable">False</property>
                           <property name="use_underline">True</property>
+                          <property name="icon-name">folder</property>
                           <property name="title">Output Folder:</property>
                           <property name="activatable-widget">set_folder_button</property>
                           <child>
@@ -153,6 +149,7 @@
                 <object class="GtkButtonBox">
                   <property name="visible">True</property>
                   <property name="layout-style">end</property>
+                  <property name="margin-top">20</property>
                   <child>
                     <object class="GtkButton" id="close_exif_folder_button">
                       <property name="visible">True</property>
@@ -171,7 +168,6 @@
                       <signal name="clicked" handler="on_clear_exif_folder_clicked" swapped="no"/>
                       <style>
                         <class name="suggested-action"/>
-                        <class name="flat"/>
                       </style>
                     </object>
                   </child>
