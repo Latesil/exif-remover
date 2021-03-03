@@ -3,33 +3,48 @@
   <!-- interface-requires gtk+ 3.0 -->
   <template class="ExifFolder" parent="GtkBox">
     <property name="visible">True</property>
-      <child>
-          <object class="GtkBox" id="exif_folder_box">
+    <property name="homogeneous">True</property>
+    <property name="margin_start">50</property>
+    <property name="margin_end">50</property>
+    <property name="margin_top">20</property>
+    <property name="margin_bottom">20</property>
+    <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <child>
+          <object class="GtkFrame">
             <property name="visible">True</property>
-            <property name="orientation">vertical</property>
-            <property name="can_focus">False</property>
-            <property name="halign">center</property>
-            <property name="hexpand">True</property>
-            <property name="vexpand">True</property>
-              <child>
-                <object class="GtkLabel" id="exif_folders_label">
-                  <property name="visible">True</property>
-                  <property name="can-focus">False</property>
-                  <property name="halign">center</property>
-                  <property name="label" translatable="yes">This is a folder</property>
-                  <property name="justify">center</property>
-                  <attributes>
-                    <attribute name="foreground" value="#88888a8a8585"/>
-                    <attribute name="size" value="15360"/>
-                  </attributes>
-                </object>
-                <packing>
-                  <property name="expand">False</property>
-                  <property name="fill">True</property>
-                  <property name="position">1</property>
-                </packing>
-              </child>
+            <child>
+              <object class="GtkBox" id="exif_folder_box">
+                <property name="visible">True</property>
+                <property name="orientation">vertical</property>
+                <property name="can_focus">False</property>
+                <property name="halign">center</property>
+                <property name="hexpand">True</property>
+                <property name="vexpand">True</property>
+                  <child>
+                    <object class="GtkLabel" id="exif_folders_label">
+                      <property name="visible">True</property>
+                      <property name="can-focus">False</property>
+                      <property name="halign">center</property>
+                      <property name="label" translatable="yes">This is a folder</property>
+                      <property name="justify">center</property>
+                      <attributes>
+                        <attribute name="foreground" value="#88888a8a8585"/>
+                        <attribute name="size" value="15360"/>
+                      </attributes>
+                    </object>
+                    <packing>
+                      <property name="expand">False</property>
+                      <property name="fill">True</property>
+                      <property name="position">1</property>
+                    </packing>
+                  </child>
+              </object>
+          </child>
           </object>
-      </child>
+        </child>
+      </object>
+    </child>
   </template>
 </interface>
