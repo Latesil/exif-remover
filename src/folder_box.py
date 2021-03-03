@@ -5,7 +5,7 @@ from gi.repository import Gtk, Gio, GLib, GExiv2
 
 from .helpers import get_files_and_folders # clear_metadata
 
-@Gtk.Template(resource_path='/com/github/Latesil/exif-remover/folder_box.ui')
+@Gtk.Template(resource_path='/com/github/Latesil/exif-remover/ui/folder_box.ui')
 class FolderBox(Gtk.Box):
 
     __gtype_name__ = "FolderBox"

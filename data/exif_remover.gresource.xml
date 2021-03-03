@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/com/github/Latesil/exif-remover">
+    <file>ui/window.ui</file>
+    <file>ui/folder_box.ui</file>
+    <file>ui/StartView.ui</file>
+    <file>ui/FoldersView.ui</file>
+    <file>ui/ExifFolder.ui</file>
+  </gresource>
+</gresources>

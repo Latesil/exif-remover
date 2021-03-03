@@ -25,7 +25,7 @@ from .folders_view import FoldersView
 from .exif_folder import ExifFolder
 
 
-@Gtk.Template(resource_path='/com/github/Latesil/exif-remover/window.ui')
+@Gtk.Template(resource_path='/com/github/Latesil/exif-remover/ui/window.ui')
 class ExifRemoverWindow(Handy.ApplicationWindow):
     __gtype_name__ = 'ExifRemoverWindow'
 
@@ -68,23 +68,23 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
 
     @Gtk.Template.Callback()
     def on_add_button_clicked(self, button):
-        chooser = Gtk.FileChooserDialog(title=_("Open Folder"),
-                                        transient_for=self,
-                                        action=Gtk.FileChooserAction.SELECT_FOLDER,
-                                        buttons=(_("Cancel"), Gtk.ResponseType.CANCEL,
-                                                 _("OK"), Gtk.ResponseType.OK))
-        response = chooser.run()
-        if response == Gtk.ResponseType.OK:
-            f = chooser.get_filename()
-            new_box = ExifFolder(f)
-            if self.props.active_view.get_name() != 'FoldersView':
-                self.main_stack.set_visible_child_name("foldersview")
-                self.folders_view.add_folder_to_view(new_box)
+        # chooser = Gtk.FileChooserDialog(title=_("Open Folder"),
+        #                                 transient_for=self,
+        #                                 action=Gtk.FileChooserAction.SELECT_FOLDER,
+        #                                 buttons=(_("Cancel"), Gtk.ResponseType.CANCEL,
+        #                                          _("OK"), Gtk.ResponseType.OK))
+        # response = chooser.run()
+        # if response == Gtk.ResponseType.OK:
+            # f = chooser.get_filename()
+        new_box = ExifFolder('/home/late/Pictures')
+        if self.props.active_view.get_name() != 'FoldersView':
+            self.main_stack.set_visible_child_name("foldersview")
+        self.folders_view.add_folder_to_view(new_box)
             # else:
             #     self.main_stack.set_visible_child_name("startview")
-            chooser.destroy()
-        else:
-            chooser.destroy()
+        #     chooser.destroy()
+        # else:
+        #     chooser.destroy()
 
     # @Gtk.Template.Callback()
     # def on_rename_checkbox_toggled(self, box):

@@ -5,7 +5,7 @@ gi.require_version('Handy', '1')
 from gi.repository import Gtk, Gio, GLib, Handy
 
 
-@Gtk.Template(resource_path="/com/github/Latesil/exif-remover/FoldersView.ui")
+@Gtk.Template(resource_path="/com/github/Latesil/exif-remover/ui/FoldersView.ui")
 class FoldersView(Gtk.Stack):
     __gtype_name__ = "FoldersView"
 
