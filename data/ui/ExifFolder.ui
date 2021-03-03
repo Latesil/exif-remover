@@ -16,6 +16,7 @@
               <property name="visible">True</property>
               <property name="orientation">vertical</property>
               <property name="can_focus">False</property>
+              <property name="margin">15</property>
               <property name="hexpand">True</property>
               <property name="vexpand">True</property>
               <child>
@@ -23,10 +24,16 @@
                   <property name="visible">True</property>
                   <property name="spacing">10</property>
                   <child>
-                    <object class="GtkImage">
+                    <object class="GtkEventBox" id="image_event_box">
                       <property name="visible">True</property>
-                      <property name="icon-name">folder</property>
-                      <property name="pixel-size">70</property>
+                      <signal name="button_press_event" handler="on_image_event_box_clicked" swapped="no"/>
+                      <child>
+                        <object class="GtkImage">
+                          <property name="visible">True</property>
+                          <property name="icon-name">folder</property>
+                          <property name="pixel-size">70</property>
+                        </object>
+                      </child>
                     </object>
                   </child>
                   <child>
@@ -45,10 +52,7 @@
               <child>
                 <object class="GtkSeparator">
                   <property name="visible">True</property>
-                  <property name="margin_start">10</property>
-                  <property name="margin_end">10</property>
-                  <property name="margin_top">0</property>
-                  <property name="margin_bottom">10</property>
+                  <property name="margin">10</property>
                 </object>
               </child>
               <child>
@@ -87,6 +91,9 @@
                     <object class="GtkButton">
                       <property name="visible">True</property>
                       <property name="label">Close</property>
+                      <style>
+                        <class name="destructive-action"/>
+                      </style>
                     </object>
                   </child>
                   <child>

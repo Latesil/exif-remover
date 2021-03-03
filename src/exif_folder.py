@@ -15,3 +15,7 @@ class ExifFolder(Gtk.Box):
         super().__init__()
         self.path = path
         self.exif_folders_label.props.label = path
+
+    @Gtk.Template.Callback()
+    def on_image_event_box_clicked(self, event, widget):
+        print('on_image_event_box_clicked')
