@@ -27,3 +27,15 @@ class ExifFolder(Gtk.Box):
     @Gtk.Template.Callback()
     def on_clear_exif_folder_clicked(self, button):
         print('on_clear_exif_folder_clicked')
+
+    @Gtk.Template.Callback()
+    def on_show_files_button_clicked(self, button):
+        print('on_show_files_button_clicked')
+
+    @Gtk.Template.Callback()
+    def on_change_output_button_changed(self, widget):
+        print('on_change_output_button_changed')
+
+    @Gtk.Template.Callback()
+    def on_set_folder_button_clicked(self, button):
+        print('on_set_folder_button_clicked')
