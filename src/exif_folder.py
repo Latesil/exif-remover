@@ -37,7 +37,7 @@ class ExifFolder(Gtk.Box):
 
     @Gtk.Template.Callback()
     def on_close_exif_folder_clicked(self, button):
-        print('on_close_exif_folder_clicked')
+        self.destroy()
 
     @Gtk.Template.Callback()
     def on_clear_exif_folder_clicked(self, button):
