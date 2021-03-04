@@ -4,17 +4,17 @@
   <template class="ExifFile" parent="GtkFlowBoxChild">
     <property name="visible">True</property>
     <property name="halign">center</property>
+    <property name="valign">end</property>
     <property name="margin-top">20</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
         <property name="orientation">vertical</property>
         <property name="spacing">20</property>
+        <property name="margin-top">20</property>
         <child>
-          <object class="GtkImage">
+          <object class="GtkImage" id="exif_file_image">
             <property name="visible">True</property>
-            <property name="icon-name">image-x-generic</property>
-            <property name="pixel-size">140</property>
           </object>
         </child>
         <child>
