@@ -12,8 +12,10 @@ class ExifFolder(Gtk.Box):
     exif_folders_label = Gtk.Template.Child()
     set_folder_row = Gtk.Template.Child()
 
-    def __init__(self, path):
+    def __init__(self, app, path):
         super().__init__()
+        self._application = app
+        self._window = app.props.window
         self.path = path
         self.exif_folders_label.props.label = path
 
@@ -31,7 +33,8 @@ class ExifFolder(Gtk.Box):
 
     @Gtk.Template.Callback()
     def on_show_files_button_clicked(self, button):
-        print('on_show_files_button_clicked')
+        self._window.set_files_view(self.path)
+
 
     @Gtk.Template.Callback()
     def on_change_output_box_changed(self, box):

@@ -106,6 +106,26 @@
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkButton" id="back_button">
+                    <property name="can_focus">True</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
+                    <property name="tooltip_text" translatable="yes">Back</property>
+                    <signal name="clicked" handler="on_back_button_clicked" swapped="no"/>
+                    <child>
+                      <object class="GtkImage">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="icon_name">go-previous-symbolic</property>
+                        <property name="icon_size">1</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="pack_type">start</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkMenuButton" id="main_menu_button">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>

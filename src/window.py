@@ -23,6 +23,7 @@ from gi.repository import Gtk, Gio, GLib, Handy, GObject
 from .start_view import StartView
 from .folders_view import FoldersView
 from .exif_folder import ExifFolder
+from .files_view import FilesView
 
 
 @Gtk.Template(resource_path='/com/github/Latesil/exif-remover/ui/window.ui')
@@ -33,6 +34,8 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
 
     content_box = Gtk.Template.Child()
     main_stack = Gtk.Template.Child()
+    back_button = Gtk.Template.Child()
+    add_button = Gtk.Template.Child()
     # open_output_folder_button = Gtk.Template.Child()
     # rename_checkbox = Gtk.Template.Child()
     # preferences_button = Gtk.Template.Child()
@@ -41,19 +44,18 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
     # main_info_label = Gtk.Template.Child()
     # about_dialog = Gtk.Template.Child()
     # preferences_dialog = Gtk.Template.Child()
-    # info_bar = Gtk.Template.Child()
+    left_header = Gtk.Template.Child()
     # main_box = Gtk.Template.Child()
     # main_list_box = Gtk.Template.Child()
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
+    def __init__(self, app, **kwargs):
+        super().__init__(application=app, **kwargs)
         self.settings = Gio.Settings.new('com.github.Latesil.exif-remover')
-
-        self.start = StartView()
+        self._app = app
+        self.start_view = StartView()
         self.folders_view = FoldersView()
         self.main_stack.connect("notify::visible-child", self._on_main_stack_visible_child_changed)
-        self.main_stack.add_named(self.start, "startview")
+        self.main_stack.add_named(self.start_view, "startview")
         self.main_stack.add_named(self.folders_view, "foldersview")
 
         # self.settings.connect("changed::folder-quantity", self.on_folder_quantity_changed, None)
@@ -65,26 +67,40 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
 
     def _on_main_stack_visible_child_changed(self, k, v):
         self.props.active_view = self.main_stack.props.visible_child
+        if self.props.active_view.get_name() == 'FilesView':
+            self.add_button.props.visible = False
+            self.back_button.props.visible = True
+        else:
+            self.add_button.props.visible = True
+            self.back_button.props.visible = False
 
     @Gtk.Template.Callback()
     def on_add_button_clicked(self, button):
-        # chooser = Gtk.FileChooserDialog(title=_("Open Folder"),
-        #                                 transient_for=self,
-        #                                 action=Gtk.FileChooserAction.SELECT_FOLDER,
-        #                                 buttons=(_("Cancel"), Gtk.ResponseType.CANCEL,
-        #                                          _("OK"), Gtk.ResponseType.OK))
-        # response = chooser.run()
-        # if response == Gtk.ResponseType.OK:
-            # f = chooser.get_filename()
-        new_box = ExifFolder('/home/late/Pictures')
-        if self.props.active_view.get_name() != 'FoldersView':
-            self.main_stack.set_visible_child_name("foldersview")
-        self.folders_view.add_folder_to_view(new_box)
-            # else:
-            #     self.main_stack.set_visible_child_name("startview")
-        #     chooser.destroy()
-        # else:
-        #     chooser.destroy()
+        chooser = Gtk.FileChooserDialog(title=_("Open Folder"),
+                                        transient_for=self,
+                                        action=Gtk.FileChooserAction.SELECT_FOLDER,
+                                        buttons=(_("Cancel"), Gtk.ResponseType.CANCEL,
+                                                 _("OK"), Gtk.ResponseType.OK))
+        response = chooser.run()
+        if response == Gtk.ResponseType.OK:
+            f = chooser.get_filename()
+            new_box = ExifFolder(self._app, f)
+            if self.props.active_view.get_name() != 'FoldersView':
+                self.main_stack.set_visible_child_name("foldersview")
+                self.folders_view.add_folder_to_view(new_box)
+            chooser.destroy()
+        else:
+            chooser.destroy()
+
+    @Gtk.Template.Callback()
+    def on_back_button_clicked(self, button):
+        print('on_back_button_clicked')
+
+    def set_files_view(self, path):
+        files_view = FilesView(self._app)
+        files_view.props.path = path
+        self.main_stack.add_named(files_view, "filesview")
+        self.main_stack.set_visible_child_name("filesview")
 
     # @Gtk.Template.Callback()
     # def on_rename_checkbox_toggled(self, box):

@@ -19,24 +19,29 @@ import sys
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('Handy', '1')
-from gi.repository import Gtk, Gio, Handy
+from gi.repository import Gtk, Gio, Handy, GObject
 from .window import ExifRemoverWindow
 
 
 class Application(Gtk.Application):
+
     def __init__(self):
         super().__init__(application_id='com.github.Latesil.exif-remover',
                          flags=Gio.ApplicationFlags.FLAGS_NONE)
+        self._window = None
+
+    @GObject.Property(type=ExifRemoverWindow, flags=GObject.ParamFlags.READABLE)
+    def window(self):
+        return self._window
 
     def do_startup(self):
         Gtk.Application.do_startup(self)
         Handy.init()
 
     def do_activate(self):
-        win = self.props.active_window
-        if not win:
-            win = ExifRemoverWindow(application=self)
-        win.present()
+        if not self._window:
+            self._window = ExifRemoverWindow(self)
+        self._window.present()
 
 
 def main(version):
