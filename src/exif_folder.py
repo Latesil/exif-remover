@@ -11,6 +11,7 @@ class ExifFolder(Gtk.Box):
 
     exif_folders_label = Gtk.Template.Child()
     set_folder_row = Gtk.Template.Child()
+    folder_image = Gtk.Template.Child()
 
     def __init__(self, app, path):
         super().__init__()
@@ -25,11 +26,14 @@ class ExifFolder(Gtk.Box):
 
     @Gtk.Template.Callback()
     def on_enter_notify_event(self, event, widget):
-        print('enter')
+        image_style_context = self.folder_image.get_style_context()
+        image_style_context.add_class('half-opacity')
+
 
     @Gtk.Template.Callback()
     def on_leave_notify_event(self, event, widget):
-        print('leave')
+        image_style_context = self.folder_image.get_style_context()
+        image_style_context.remove_class('half-opacity')
 
     @Gtk.Template.Callback()
     def on_close_exif_folder_clicked(self, button):

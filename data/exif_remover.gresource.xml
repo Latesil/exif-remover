@@ -7,5 +7,6 @@
     <file>ui/FoldersView.ui</file>
     <file>ui/ExifFolder.ui</file>
     <file>ui/FilesView.ui</file>
+    <file>com.github.Latesil.exif-remover.css</file>
   </gresource>
 </gresources>
