@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <!-- interface-requires gtk+ 3.0 -->
+  <template class="ExifFile" parent="GtkBox">
+    <property name="visible">True</property>
+      <child>
+        <object class="GtkLabel" id="exif_file_label">
+            <property name="visible">True</property>
+            <property name="label">test</property>
+        </object>
+      </child>
+  </template>
+</interface>

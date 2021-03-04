@@ -1,5 +1,6 @@
 import gi
 from locale import gettext as _
+
 gi.require_version('Gtk', '3.0')
 gi.require_version('Handy', '1')
 from gi.repository import Gtk, Gio, GLib, Handy, Gdk
@@ -30,7 +31,6 @@ class ExifFolder(Gtk.Box):
         image_style_context = self.folder_image.get_style_context()
         image_style_context.add_class('half-opacity')
 
-
     @Gtk.Template.Callback()
     def on_leave_notify_event(self, event, widget):
         image_style_context = self.folder_image.get_style_context()
@@ -47,7 +47,6 @@ class ExifFolder(Gtk.Box):
     @Gtk.Template.Callback()
     def on_show_files_button_clicked(self, button):
         self._window.set_files_view(self.path)
-
 
     @Gtk.Template.Callback()
     def on_change_output_box_changed(self, box):

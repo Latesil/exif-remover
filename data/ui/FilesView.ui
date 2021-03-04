@@ -7,16 +7,11 @@
         <object class="GtkScrolledWindow">
           <property name="visible">True</property>
           <child>
-            <object class="GtkBox" id="files_view_container">
+            <object class="GtkFlowBox" id="files_view_container">
               <property name="visible">True</property>
-              <property name="orientation">vertical</property>
-              <property name="can_focus">False</property>
-              <property name="hexpand">True</property>
-              <property name="vexpand">True</property>
+              <property name="orientation">horizontal</property>
                 <child>
-                  <object class="GtkLabel" id="files_view_main_label">
-                    <property name="visible">True</property>
-                  </object>
+                  <placeholder />
                 </child>
             </object>
           </child>
