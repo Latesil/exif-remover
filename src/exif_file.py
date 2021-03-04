@@ -7,7 +7,7 @@ from gi.repository import Gtk, Gio, GLib, Handy, Gdk
 
 
 @Gtk.Template(resource_path="/com/github/Latesil/exif-remover/ui/ExifFile.ui")
-class ExifFile(Gtk.Box):
+class ExifFile(Gtk.FlowBoxChild):
     __gtype_name__ = "ExifFile"
 
     exif_file_label = Gtk.Template.Child()

@@ -1,3 +1,7 @@
 .half-opacity {
     opacity: 0.7;
 }
+
+.rounded {
+    border-radius: 10px;
+}
