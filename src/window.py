@@ -24,6 +24,7 @@ from .start_view import StartView
 from .folders_view import FoldersView
 from .exif_folder import ExifFolder
 from .files_view import FilesView
+from .AboutDialog import AboutWindow
 
 
 @Gtk.Template(resource_path='/com/github/Latesil/exif-remover/ui/window.ui')
@@ -39,10 +40,8 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
     # open_output_folder_button = Gtk.Template.Child()
     # rename_checkbox = Gtk.Template.Child()
     # preferences_button = Gtk.Template.Child()
-    about_button = Gtk.Template.Child()
     # rename_entry = Gtk.Template.Child()
     # main_info_label = Gtk.Template.Child()
-    # about_dialog = Gtk.Template.Child()
     # preferences_dialog = Gtk.Template.Child()
     left_header = Gtk.Template.Child()
     # main_box = Gtk.Template.Child()
@@ -102,7 +101,7 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
         if path not in children:
             files_view = FilesView(self._app)
             files_view.props.title = path
-            self.main_stack.add_named(files_view, files_view.props.title)  # path == files_view.props.title
+            self.main_stack.add_named(files_view, files_view.props.title)
         self.main_stack.set_visible_child_name(path)
 
     # @Gtk.Template.Callback()
@@ -119,11 +118,11 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
     #     preferences.run()
     #     preferences.hide()
 
-    # @Gtk.Template.Callback()
-    # def on_about_button_clicked(self, button):
-    #     about = self.about_dialog
-    #     about.run()
-    #     about.hide()
+    @Gtk.Template.Callback()
+    def on_about_button_clicked(self, button):
+        about = AboutWindow(self)
+        about.run()
+        about.destroy()
 
     # @Gtk.Template.Callback()
     # def on_rename_entry_changed(self, entry):
