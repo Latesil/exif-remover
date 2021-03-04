@@ -28,6 +28,8 @@
                   <child>
                     <object class="GtkEventBox" id="image_event_box">
                       <property name="visible">True</property>
+                      <signal name="enter_notify_event" handler="on_enter_notify_event" swapped="no"/>
+                      <signal name="leave_notify_event" handler="on_leave_notify_event" swapped="no"/>
                       <signal name="button_press_event" handler="on_image_event_box_clicked" swapped="no"/>
                       <child>
                         <object class="GtkImage">
