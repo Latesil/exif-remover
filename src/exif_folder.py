@@ -1,5 +1,5 @@
 import gi
-
+from locale import gettext as _
 gi.require_version('Gtk', '3.0')
 gi.require_version('Handy', '1')
 from gi.repository import Gtk, Gio, GLib, Handy, Gdk
@@ -12,6 +12,7 @@ class ExifFolder(Gtk.Box):
     exif_folders_label = Gtk.Template.Child()
     set_folder_row = Gtk.Template.Child()
     folder_image = Gtk.Template.Child()
+    change_output_label = Gtk.Template.Child()
 
     def __init__(self, app, path):
         super().__init__()
@@ -57,4 +58,15 @@ class ExifFolder(Gtk.Box):
 
     @Gtk.Template.Callback()
     def on_set_folder_button_clicked(self, button):
-        print('on_set_folder_button_clicked')
+        chooser = Gtk.FileChooserDialog(title=_("Open Folder"),
+                                        transient_for=self._window,
+                                        action=Gtk.FileChooserAction.SELECT_FOLDER,
+                                        buttons=(_("Cancel"), Gtk.ResponseType.CANCEL,
+                                                 _("OK"), Gtk.ResponseType.OK))
+        response = chooser.run()
+        if response == Gtk.ResponseType.OK:
+            f = chooser.get_filename()
+            self.change_output_label.props.label = f
+            chooser.destroy()
+        else:
+            chooser.destroy()

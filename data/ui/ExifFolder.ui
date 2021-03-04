@@ -120,7 +120,7 @@
                               <property name="visible">True</property>
                               <property name="spacing">10</property>
                               <child>
-                                <object class="GtkLabel" id="change_output_entry">
+                                <object class="GtkLabel" id="change_output_label">
                                   <property name="visible">True</property>
                                   <property name="valign">center</property>
                                   <property name="label">/new/output/folder</property>
