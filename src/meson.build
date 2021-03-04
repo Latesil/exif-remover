@@ -26,6 +26,7 @@ exif_remover_sources = [
   'start_view.py',
   'folders_view.py',
   'exif_folder.py',
+  'files_view.py',
 ]
 
 install_data(exif_remover_sources, install_dir: moduledir)

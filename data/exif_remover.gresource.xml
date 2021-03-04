@@ -6,5 +6,6 @@
     <file>ui/StartView.ui</file>
     <file>ui/FoldersView.ui</file>
     <file>ui/ExifFolder.ui</file>
+    <file>ui/FilesView.ui</file>
   </gresource>
 </gresources>
