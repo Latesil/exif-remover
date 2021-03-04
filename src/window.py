@@ -55,8 +55,8 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
         self.start_view = StartView()
         self.folders_view = FoldersView()
         self.main_stack.connect("notify::visible-child", self._on_main_stack_visible_child_changed)
-        self.main_stack.add_named(self.start_view, "startview")
-        self.main_stack.add_named(self.folders_view, "foldersview")
+        self.main_stack.add_named(self.start_view, self.start_view.props.title)
+        self.main_stack.add_named(self.folders_view, self.folders_view.props.title)
 
         # self.settings.connect("changed::folder-quantity", self.on_folder_quantity_changed, None)
 
@@ -94,13 +94,16 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
 
     @Gtk.Template.Callback()
     def on_back_button_clicked(self, button):
-        print('on_back_button_clicked')
+        self.main_stack.set_visible_child_name("foldersview")
+        self.left_header.props.title = "Exif Remover"
 
     def set_files_view(self, path):
+        children = [child.props.title for child in self.main_stack.get_children()]
         files_view = FilesView(self._app)
-        files_view.props.path = path
-        self.main_stack.add_named(files_view, "filesview")
-        self.main_stack.set_visible_child_name("filesview")
+        files_view.props.title = path
+        if files_view.props.title not in children:
+            self.main_stack.add_named(files_view, files_view.props.title)
+        self.main_stack.set_visible_child_name(files_view.props.title)
 
     # @Gtk.Template.Callback()
     # def on_rename_checkbox_toggled(self, box):

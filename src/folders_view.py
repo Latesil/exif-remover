@@ -2,12 +2,14 @@ import gi
 
 gi.require_version('Gtk', '3.0')
 gi.require_version('Handy', '1')
-from gi.repository import Gtk, Gio, GLib, Handy
+from gi.repository import Gtk, Gio, GLib, Handy, GObject
 
 
 @Gtk.Template(resource_path="/com/github/Latesil/exif-remover/ui/FoldersView.ui")
 class FoldersView(Gtk.Stack):
     __gtype_name__ = "FoldersView"
+
+    title = GObject.Property(type=str, default="foldersview")
 
     folders_view_container = Gtk.Template.Child()
 

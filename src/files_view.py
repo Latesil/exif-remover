@@ -9,7 +9,7 @@ from gi.repository import Gtk, Gio, GLib, Handy, GObject
 class FilesView(Gtk.Stack):
     __gtype_name__ = "FilesView"
 
-    path = GObject.Property(type=str, default=None)
+    title = GObject.Property(type=str, default=None)
 
     files_view_main_label = Gtk.Template.Child()
 
@@ -20,8 +20,8 @@ class FilesView(Gtk.Stack):
         self._window = self.app.props.window
         self.headerbar = self._window.left_header
 
-        self.connect('notify::path', self.on_path_changed)
+        self.connect('notify::title', self.on_title_changed)
 
-    def on_path_changed(self, widget, param):
-        self.files_view_main_label.props.label = self.props.path
-        self.headerbar.props.title = self.props.path
+    def on_title_changed(self, widget, param):
+        self.files_view_main_label.props.label = self.props.title
+        self.headerbar.props.title = self.props.title
