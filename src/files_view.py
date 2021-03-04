@@ -1,13 +1,14 @@
-import gi
 import threading
 import time
+
+import gi
+
 gi.require_version('Gtk', '3.0')
 gi.require_version('Handy', '1')
-from gi.repository import Gtk, Gio, GLib, Handy, GObject
+from gi.repository import Gtk, Gio, GLib, GObject
 from .helpers import get_files_and_folders
 from .exif_file import ExifFile
 
-lock = threading.Lock()
 
 @Gtk.Template(resource_path="/com/github/Latesil/exif-remover/ui/FilesView.ui")
 class FilesView(Gtk.Stack):
@@ -15,6 +16,7 @@ class FilesView(Gtk.Stack):
 
     title = GObject.Property(type=str, default=None)
     files_view_container = Gtk.Template.Child()
+    files_revealer = Gtk.Template.Child()
 
     def __init__(self, app):
         super().__init__()
@@ -24,6 +26,13 @@ class FilesView(Gtk.Stack):
         self.headerbar = self._window.left_header
         self.allowed_files = ['jpg', 'png', 'jpeg']
         self.connect('notify::title', self.on_title_changed)
+
+    @Gtk.Template.Callback()
+    def on_selected_children_changed(self, widget):
+        if widget.get_selected_children():
+            self.files_revealer.set_reveal_child(True)
+        else:
+            self.files_revealer.set_reveal_child(False)
 
     def on_title_changed(self, widget, param):
         if self.props.title is None:

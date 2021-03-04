@@ -22,6 +22,7 @@
             <property name="visible">True</property>
             <property name="max_width_chars">15</property>
             <property name="margin">10</property>
+            <property name="margin-end">30</property>
             <property name="ellipsize">end</property>
           </object>
         </child>
