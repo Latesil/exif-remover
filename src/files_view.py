@@ -1,11 +1,13 @@
 import gi
-
+import threading
+import time
 gi.require_version('Gtk', '3.0')
 gi.require_version('Handy', '1')
 from gi.repository import Gtk, Gio, GLib, Handy, GObject
 from .helpers import get_files_and_folders
 from .exif_file import ExifFile
 
+lock = threading.Lock()
 
 @Gtk.Template(resource_path="/com/github/Latesil/exif-remover/ui/FilesView.ui")
 class FilesView(Gtk.Stack):
@@ -42,9 +44,11 @@ class FilesView(Gtk.Stack):
                 files_in_view.append(f)
 
         if files_in_view:
-            self.populate_file_view(files_in_view)
+            for f in files_in_view:
+                thread = threading.Thread(target=self.populate_file_view, args=(f,))
+                thread.daemon = True
+                thread.start()
 
-    def populate_file_view(self, files):
-        for f in files:
-            exif_file = ExifFile(f)
-            self.files_view_container.add(exif_file)
+    def populate_file_view(self, file):
+        exif_file = ExifFile(file)
+        self.files_view_container.insert(exif_file, -1)
