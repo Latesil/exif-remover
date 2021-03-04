@@ -99,11 +99,11 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
 
     def set_files_view(self, path):
         children = [child.props.title for child in self.main_stack.get_children()]
-        files_view = FilesView(self._app)
-        files_view.props.title = path
-        if files_view.props.title not in children:
-            self.main_stack.add_named(files_view, files_view.props.title)
-        self.main_stack.set_visible_child_name(files_view.props.title)
+        if path not in children:
+            files_view = FilesView(self._app)
+            files_view.props.title = path
+            self.main_stack.add_named(files_view, files_view.props.title)  # path == files_view.props.title
+        self.main_stack.set_visible_child_name(path)
 
     # @Gtk.Template.Callback()
     # def on_rename_checkbox_toggled(self, box):

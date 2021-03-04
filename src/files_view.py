@@ -45,9 +45,13 @@ class FilesView(Gtk.Stack):
 
         if files_in_view:
             for f in files_in_view:
-                thread = threading.Thread(target=self.populate_file_view, args=(f,))
+                thread = threading.Thread(target=self.update_file_view, args=(f,))
                 thread.daemon = True
                 thread.start()
+
+    def update_file_view(self, f):
+        GLib.idle_add(self.populate_file_view, f)
+        time.sleep(0.2)
 
     def populate_file_view(self, file):
         exif_file = ExifFile(file)

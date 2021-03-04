@@ -14,6 +14,7 @@ class ExifFolder(Gtk.Box):
     set_folder_row = Gtk.Template.Child()
     folder_image = Gtk.Template.Child()
     change_output_label = Gtk.Template.Child()
+    show_files_button = Gtk.Template.Child()
 
     def __init__(self, app, path):
         super().__init__()
