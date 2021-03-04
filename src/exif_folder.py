@@ -39,7 +39,10 @@ class ExifFolder(Gtk.Box):
 
     @Gtk.Template.Callback()
     def on_close_exif_folder_clicked(self, button):
+        parent = self._window.main_stack.get_visible_child()
         self.destroy()
+        if not parent.folders_view_container.get_children():
+            self._window.main_stack.set_visible_child_name(self._window.start_view.props.title)
 
     @Gtk.Template.Callback()
     def on_clear_exif_folder_clicked(self, button):
