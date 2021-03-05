@@ -17,6 +17,7 @@ class FilesView(Gtk.Stack):
     title = GObject.Property(type=str, default=None)
     files_view_container = Gtk.Template.Child()
     files_revealer = Gtk.Template.Child()
+    selected_children_label = Gtk.Template.Child()
 
     def __init__(self, app):
         super().__init__()
@@ -31,6 +32,8 @@ class FilesView(Gtk.Stack):
     def on_selected_children_changed(self, widget):
         if widget.get_selected_children():
             self.files_revealer.set_reveal_child(True)
+            selected_children = len(widget.get_selected_children())
+            self.selected_children_label.props.label = str(selected_children)
         else:
             self.files_revealer.set_reveal_child(False)
 
@@ -70,6 +73,6 @@ class FilesView(Gtk.Stack):
         GLib.idle_add(self.populate_file_view, f)
         time.sleep(0.2)
 
-    def populate_file_view(self, file):
-        exif_file = ExifFile(file)
+    def populate_file_view(self, files):
+        exif_file = ExifFile(files)
         self.files_view_container.insert(exif_file, -1)
