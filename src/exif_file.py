@@ -20,3 +20,4 @@ class ExifFile(Gtk.FlowBoxChild):
         self.exif_file_label.props.label = GLib.basename(path)
         self.image = GdkPixbuf.Pixbuf.new_from_file_at_scale(self.path, 120, -1, True)
         self.exif_file_image.set_from_pixbuf(self.image)
+        self.set_tooltip_text(GLib.basename(path))

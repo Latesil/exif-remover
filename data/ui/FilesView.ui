@@ -31,7 +31,6 @@
           <object class="GtkRevealer" id="files_revealer">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="halign">center</property>
             <property name="valign">end</property>
             <property name="transition-type">slide-up</property>
             <child>
@@ -39,6 +38,19 @@
                 <property name="visible">True</property>
                 <property name="spacing">10</property>
                 <property name="margin">10</property>
+                <property name="halign">fill</property>
+                <child>
+                  <object class="GtkBox">
+                    <property name="visible">True</property>
+                    <property name="spacing">5</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Scale:</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
                 <child>
                   <object class="GtkBox">
                     <property name="visible">True</property>
@@ -56,23 +68,40 @@
                       </object>
                     </child>
                   </object>
+                  <packing>
+                    <property name="fill">True</property>
+                    <property name="pack-type">end</property>
+                    <property name="position">2</property>
+                  </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="select_all_button">
+                  <object class="GtkBox">
                     <property name="visible">True</property>
-                    <property name="label">Select All</property>
-                    <signal name="clicked" handler="on_select_all_button_clicked" swapped="no" />
+                    <child>
+                      <object class="GtkButton" id="select_all_button">
+                        <property name="visible">True</property>
+                        <property name="label">Select All</property>
+                        <signal name="clicked" handler="on_select_all_button_clicked" swapped="no" />
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="unselect_all_button">
+                        <property name="visible">True</property>
+                        <property name="label">Unselect All</property>
+                        <signal name="clicked" handler="on_unselect_all_button_clicked" swapped="no" />
+                      </object>
+                    </child>
                   </object>
-                </child>
-                <child>
-                  <object class="GtkButton" id="unselect_all_button">
-                    <property name="visible">True</property>
-                    <property name="label">Unselect All</property>
-                    <signal name="clicked" handler="on_unselect_all_button_clicked" swapped="no" />
-                  </object>
+                  <packing>
+                    <property name="pack-type">end</property>
+                    <property name="position">1</property>
+                  </packing>
                 </child>
               </object>
             </child>
+            <style>
+              <class name="box_shadow"/>
+            </style>
           </object>
           <packing>
             <property name="expand">False</property>
