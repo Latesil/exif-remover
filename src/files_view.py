@@ -19,6 +19,7 @@ class FilesView(Gtk.Stack):
     files_revealer = Gtk.Template.Child()
     selected_children_label = Gtk.Template.Child()
     show_only_selected_checkbox = Gtk.Template.Child()
+    files_view_scrolled_window = Gtk.Template.Child()
 
     def __init__(self, app):
         super().__init__()
@@ -28,6 +29,8 @@ class FilesView(Gtk.Stack):
         self.headerbar = self._window.left_header
         self.allowed_files = ['jpg', 'png', 'jpeg']
         self.connect('notify::title', self.on_title_changed)
+        self.files_view_container.set_hadjustment(self.files_view_scrolled_window.get_vadjustment())
+        self.files_view_container.set_vadjustment(self.files_view_scrolled_window.get_hadjustment())
 
     @Gtk.Template.Callback()
     def on_selected_children_changed(self, widget):

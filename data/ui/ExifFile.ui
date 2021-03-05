@@ -4,18 +4,21 @@
   <template class="ExifFile" parent="GtkFlowBoxChild">
     <property name="visible">True</property>
     <property name="halign">center</property>
-    <property name="valign">end</property>
+    <property name="valign">start</property>
     <property name="margin-top">20</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
         <property name="orientation">vertical</property>
-        <property name="spacing">20</property>
         <property name="margin-top">20</property>
         <child>
           <object class="GtkImage" id="exif_file_image">
             <property name="visible">True</property>
+            <property name="valign">end</property>
           </object>
+          <packing>
+            <property name="expand">True</property>
+          </packing>
         </child>
         <child>
           <object class="GtkLabel" id="exif_file_label">
@@ -25,6 +28,9 @@
             <property name="margin-end">30</property>
             <property name="ellipsize">end</property>
           </object>
+          <packing>
+            <property name="pack-type">end</property>
+          </packing>
         </child>
       </object>
     </child>
