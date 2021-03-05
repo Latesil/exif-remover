@@ -18,6 +18,7 @@ class FilesView(Gtk.Stack):
     files_view_container = Gtk.Template.Child()
     files_revealer = Gtk.Template.Child()
     selected_children_label = Gtk.Template.Child()
+    show_only_selected_checkbox = Gtk.Template.Child()
 
     def __init__(self, app):
         super().__init__()
@@ -44,6 +45,21 @@ class FilesView(Gtk.Stack):
     @Gtk.Template.Callback()
     def on_unselect_all_button_clicked(self, button):
         self.files_view_container.unselect_all()
+        self.show_only_selected_checkbox.props.active = False
+        for i in self.files_view_container.get_children():
+            i.props.visible = True
+
+    @Gtk.Template.Callback()
+    def on_show_only_selected_checkbox_toggled(self, checkbox):
+        selected = self.files_view_container.get_selected_children()
+        all_photos = self.files_view_container.get_children()
+        if checkbox.props.active:
+            for i in all_photos:
+                if i not in selected:
+                    i.props.visible = False
+        else:
+            for i in all_photos:
+                i.props.visible = True
 
     def on_title_changed(self, widget, param):
         if self.props.title is None:
