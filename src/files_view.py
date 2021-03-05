@@ -34,6 +34,14 @@ class FilesView(Gtk.Stack):
         else:
             self.files_revealer.set_reveal_child(False)
 
+    @Gtk.Template.Callback()
+    def on_select_all_button_clicked(self, button):
+        self.files_view_container.select_all()
+
+    @Gtk.Template.Callback()
+    def on_unselect_all_button_clicked(self, button):
+        self.files_view_container.unselect_all()
+
     def on_title_changed(self, widget, param):
         if self.props.title is None:
             return

@@ -38,11 +38,20 @@
               <object class="GtkBox" id="bottom_overlay_box">
                 <property name="visible">True</property>
                 <property name="orientation">horizontal</property>
+                <property name="spacing">10</property>
+                <property name="margin">10</property>
                 <child>
-                  <object class="GtkLabel">
+                  <object class="GtkButton" id="select_all_button">
                     <property name="visible">True</property>
-                    <property name="label">Bottom</property>
-                    <property name="margin">10</property>
+                    <property name="label">Select All</property>
+                    <signal name="clicked" handler="on_select_all_button_clicked" swapped="no" />
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="unselect_all_button">
+                    <property name="visible">True</property>
+                    <property name="label">Unselect All</property>
+                    <signal name="clicked" handler="on_unselect_all_button_clicked" swapped="no" />
                   </object>
                 </child>
               </object>
