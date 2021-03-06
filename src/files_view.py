@@ -83,15 +83,15 @@ class FilesView(Gtk.Stack):
                 files_in_view.append(f)
 
         if files_in_view:
-            for f in files_in_view:
-                thread = threading.Thread(target=self.update_file_view, args=(f,))
-                thread.daemon = True
-                thread.start()
+            thread = threading.Thread(target=self.update_file_view, args=[files_in_view])
+            thread.daemon = True
+            thread.start()
 
-    def update_file_view(self, f):
-        GLib.idle_add(self.populate_file_view, f)
-        time.sleep(0.2)
+    def update_file_view(self, files):
+        for f in files:
+            GLib.idle_add(self.populate_file_view, f)
+            time.sleep(0.2)  # need this for some reason
 
-    def populate_file_view(self, files):
-        exif_file = ExifFile(files)
+    def populate_file_view(self, file):
+        exif_file = ExifFile(file)
         self.files_view_container.insert(exif_file, -1)
