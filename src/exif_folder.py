@@ -4,6 +4,7 @@ from locale import gettext as _
 gi.require_version('Gtk', '3.0')
 gi.require_version('Handy', '1')
 from gi.repository import Gtk, Gio, GLib, Handy, Gdk
+from .helpers import get_files_and_folders
 
 
 @Gtk.Template(resource_path="/com/github/Latesil/exif-remover/ui/ExifFolder.ui")
@@ -15,6 +16,7 @@ class ExifFolder(Gtk.Box):
     folder_image = Gtk.Template.Child()
     change_output_label = Gtk.Template.Child()
     show_files_button = Gtk.Template.Child()
+    show_files_row = Gtk.Template.Child()
 
     def __init__(self, app, path):
         super().__init__()
@@ -22,6 +24,19 @@ class ExifFolder(Gtk.Box):
         self._window = app.props.window
         self.path = path
         self.exif_folders_label.props.label = path
+        self.allowed_files = ['jpg', 'png', 'jpeg']
+        self.files_in_view = []
+        folders, files = get_files_and_folders(self.path)
+        for f in files:
+            simple_file = Gio.File.new_for_path(f)
+            try:
+                name, ext = simple_file.get_basename().rsplit('.', 1)
+            except ValueError:
+                ext = ""
+
+            if ext in self.allowed_files and not name.startswith('.'):
+                self.files_in_view.append(f)
+        self.show_files_row.props.subtitle = str(len(self.files_in_view))
 
     @Gtk.Template.Callback()
     def on_image_event_box_clicked(self, event, widget):
@@ -50,7 +65,7 @@ class ExifFolder(Gtk.Box):
 
     @Gtk.Template.Callback()
     def on_show_files_button_clicked(self, button):
-        self._window.set_files_view(self.path)
+        self._window.set_files_view(self.path, self.files_in_view)
 
     @Gtk.Template.Callback()
     def on_change_output_box_changed(self, box):

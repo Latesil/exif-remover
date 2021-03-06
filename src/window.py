@@ -96,10 +96,10 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
         self.main_stack.set_visible_child_name("foldersview")
         self.left_header.props.title = "Exif Remover"
 
-    def set_files_view(self, path):
+    def set_files_view(self, path, files):
         children = [child.props.title for child in self.main_stack.get_children()]
         if path not in children:
-            files_view = FilesView(self._app)
+            files_view = FilesView(self._app, files)
             files_view.props.title = path
             self.main_stack.add_named(files_view, files_view.props.title)
         self.main_stack.set_visible_child_name(path)

@@ -63,12 +63,12 @@
                     <object class="HdyPreferencesGroup">
                       <property name="visible">True</property>
                       <child>
-                        <object class="HdyActionRow">
+                        <object class="HdyActionRow" id="show_files_row">
                           <property name="visible">True</property>
                           <property name="selectable">False</property>
                           <property name="use_underline">True</property>
                           <property name="title">Files:</property>
-                          <property name="subtitle">56</property>
+                          <property name="subtitle">0</property>
                           <property name="icon-name">image-x-generic</property>
                           <property name="activatable-widget">show_files_button</property>
                           <child>
