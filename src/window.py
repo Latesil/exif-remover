@@ -82,8 +82,8 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
                                                  _("OK"), Gtk.ResponseType.OK))
         response = chooser.run()
         if response == Gtk.ResponseType.OK:
-            f = chooser.get_filename()
-            new_box = ExifFolder(self._app, f)
+            path = chooser.get_filename()
+            new_box = ExifFolder(self._app, path=path)
             if self.props.active_view.get_name() != 'FoldersView':
                 self.main_stack.set_visible_child_name("foldersview")
                 self.folders_view.add_folder_to_view(new_box)
@@ -93,6 +93,14 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
 
     @Gtk.Template.Callback()
     def on_back_button_clicked(self, button):
+        current_view = self.main_stack.get_visible_child()  # current_view = files_view
+        selected_photos = current_view.files_view_container.get_selected_children()
+        if selected_photos:  # and check if photos exist
+            folder_view = self.main_stack.get_child_by_name('foldersview')
+            for child in folder_view.folders_view_container.get_children():  # search in open folders
+                if child.props.path == current_view.props.title:  # child == Exif Folder
+                    child.files_to_process = selected_photos
+                    child.show_files_row.props.subtitle = str(len(child.files_to_process))
         self.main_stack.set_visible_child_name("foldersview")
         self.left_header.props.title = "Exif Remover"
 

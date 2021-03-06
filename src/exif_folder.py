@@ -3,13 +3,15 @@ from locale import gettext as _
 
 gi.require_version('Gtk', '3.0')
 gi.require_version('Handy', '1')
-from gi.repository import Gtk, Gio, GLib, Handy, Gdk
+from gi.repository import Gtk, Gio, GLib, Handy, Gdk, GObject
 from .helpers import get_files_and_folders
 
 
 @Gtk.Template(resource_path="/com/github/Latesil/exif-remover/ui/ExifFolder.ui")
 class ExifFolder(Gtk.Box):
     __gtype_name__ = "ExifFolder"
+
+    path = GObject.Property(type=str, default=None)
 
     exif_folders_label = Gtk.Template.Child()
     set_folder_row = Gtk.Template.Child()
@@ -22,10 +24,17 @@ class ExifFolder(Gtk.Box):
         super().__init__()
         self._application = app
         self._window = app.props.window
-        self.path = path
-        self.exif_folders_label.props.label = path
+        self.props.path = path
+
+        if self.props.path is None:
+            print('Sorry, something went wrong (path is empty)')
+            return
+
+        self.path = self.props.path
+        self.exif_folders_label.props.label = self.path
         self.allowed_files = ['jpg', 'png', 'jpeg']
         self.files_in_view = []
+        self.files_to_process = []
         folders, files = get_files_and_folders(self.path)
         for f in files:
             simple_file = Gio.File.new_for_path(f)
@@ -61,7 +70,10 @@ class ExifFolder(Gtk.Box):
 
     @Gtk.Template.Callback()
     def on_clear_exif_folder_clicked(self, button):
-        print('on_clear_exif_folder_clicked')
+        if self.files_to_process:
+            files = [f.path for f in self.files_to_process]
+            print(files)
+
 
     @Gtk.Template.Callback()
     def on_show_files_button_clicked(self, button):
