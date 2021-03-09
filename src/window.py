@@ -75,13 +75,11 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
 
     @Gtk.Template.Callback()
     def on_add_button_clicked(self, button):
-        chooser = Gtk.FileChooserDialog(title=_("Open Folder"),
-                                        transient_for=self,
-                                        action=Gtk.FileChooserAction.SELECT_FOLDER,
-                                        buttons=(_("Cancel"), Gtk.ResponseType.CANCEL,
-                                                 _("OK"), Gtk.ResponseType.OK))
+        chooser = Gtk.FileChooserNative.new(_("Open Folder"),
+                                        self,
+                                        Gtk.FileChooserAction.SELECT_FOLDER)
         response = chooser.run()
-        if response == Gtk.ResponseType.OK:
+        if response == Gtk.ResponseType.ACCEPT:
             path = chooser.get_filename()
             new_box = ExifFolder(self._app, path=path)
             if self.props.active_view.get_name() != 'FoldersView':
