@@ -80,5 +80,5 @@ class FilesView(Gtk.Stack):
             time.sleep(0.2)  # need this for some reason
 
     def populate_file_view(self, file):
-        exif_file = ExifFile(file)
+        exif_file = ExifFile(file.get_path())
         self.files_view_container.insert(exif_file, -1)
