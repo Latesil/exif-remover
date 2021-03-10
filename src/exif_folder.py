@@ -73,6 +73,8 @@ class ExifFolder(Gtk.Box):
 
     @Gtk.Template.Callback()
     def on_clear_exif_folder_clicked(self, button):
+        # TODO async
+        n = 1
         output_folder = self.settings.get_string("output-folder")
         if output_folder == "":
             output_folder = GLib.build_pathv(
@@ -90,11 +92,20 @@ class ExifFolder(Gtk.Box):
                 input_file = Gio.File.new_for_path(
                     GLib.build_pathv(GLib.DIR_SEPARATOR_S, [file.get_path()])
                 )
+
+                # check if need to rename and correct name
+                if self.settings.get_boolean('rename'):
+                    if self.settings.get_string("output-filename") == "":
+                        self.settings.reset('output-filename')
+                    name = self.settings.get_string('output-filename') + "_" + str(n)
+                else:
+                    name = input_file.get_basename()
+
                 output_file = Gio.File.new_for_path(
                     GLib.build_pathv(
                         GLib.DIR_SEPARATOR_S, [
                             output_folder,
-                            file.get_basename()
+                            name
                         ]
                     )
                 )
@@ -105,9 +116,10 @@ class ExifFolder(Gtk.Box):
                         print('skipped: ', file.get_path())
                         continue
                     else:
-                        print(err.domain, err.message, err.code)
+                        print(err.domain, ':', err.message, 'code:', err.code)
                         return
                 clear_metadata(input_file, output_file)
+                n += 1
         else:
             print('There is no files to process')
             return
