@@ -25,6 +25,7 @@ class ExifFolder(Gtk.Box):
         self._application = app
         self._window = app.props.window
         self.settings = Gio.Settings.new('com.github.Latesil.exif-remover')
+        self.all_photos_to_process = True
         self.props.path = path
 
         if self.props.path is None:
@@ -45,7 +46,7 @@ class ExifFolder(Gtk.Box):
                 ext = ""
 
             if ext in self.allowed_files and not name.startswith('.'):
-                self.files_in_view.append(f)
+                self.files_in_view.append(simple_file)
         self.show_files_row.props.subtitle = str(len(self.files_in_view))
 
     @Gtk.Template.Callback()
@@ -79,16 +80,20 @@ class ExifFolder(Gtk.Box):
                     'cleared'
                 ]
             )
+
+        if self.all_photos_to_process:
+            self.files_to_process = self.files_in_view
+
         if self.files_to_process:
             for file in self.files_to_process:
                 input_file = Gio.File.new_for_path(
-                    GLib.build_pathv(GLib.DIR_SEPARATOR_S, [file.path])
+                    GLib.build_pathv(GLib.DIR_SEPARATOR_S, [file.get_path()])
                 )
                 output_file = Gio.File.new_for_path(
                     GLib.build_pathv(
                         GLib.DIR_SEPARATOR_S, [
                             output_folder,
-                            file.basename
+                            file.get_basename()
                         ]
                     )
                 )
@@ -96,7 +101,7 @@ class ExifFolder(Gtk.Box):
                     input_file.copy(output_file, Gio.FileCopyFlags.NONE)
                 except GLib.Error as err:
                     if err.code == 2:  # file exists
-                        print('skipped: ', file.path)
+                        print('skipped: ', file.get_path())
                         continue
                     else:
                         print(err.domain, err.message, err.code)
@@ -108,6 +113,7 @@ class ExifFolder(Gtk.Box):
 
     @Gtk.Template.Callback()
     def on_show_files_button_clicked(self, button):
+        self.all_photos_to_process = False
         self._window.set_files_view(self.path, self.files_in_view)
 
     @Gtk.Template.Callback()
