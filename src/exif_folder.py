@@ -70,14 +70,21 @@ class ExifFolder(Gtk.Box):
 
     @Gtk.Template.Callback()
     def on_clear_exif_folder_clicked(self, button):
+        output_folder = self.settings.get_string("output-filename")
         if self.files_to_process:
             for file in self.files_to_process:
-                input_file = Gio.File.new_for_path(GLib.build_pathv(GLib.DIR_SEPARATOR_S, [
-                                                                    file.path]))
-                output_file = Gio.File.new_for_path(GLib.build_pathv(GLib.DIR_SEPARATOR_S, [
-                                                                     GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PICTURES),
-                                                                     'cleared',
-                                                                     file.basename]))
+                input_file = Gio.File.new_for_path(
+                    GLib.build_pathv(GLib.DIR_SEPARATOR_S, [file.path])
+                )
+                output_file = Gio.File.new_for_path(
+                    GLib.build_pathv(
+                        GLib.DIR_SEPARATOR_S, [
+                            GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PICTURES),
+                            output_folder,
+                            file.basename
+                        ]
+                    )
+                )
                 try:
                     input_file.copy(output_file, Gio.FileCopyFlags.NONE)
                 except GLib.Error as err:
@@ -102,13 +109,11 @@ class ExifFolder(Gtk.Box):
 
     @Gtk.Template.Callback()
     def on_set_folder_button_clicked(self, button):
-        chooser = Gtk.FileChooserDialog(title=_("Open Folder"),
-                                        transient_for=self._window,
-                                        action=Gtk.FileChooserAction.SELECT_FOLDER,
-                                        buttons=(_("Cancel"), Gtk.ResponseType.CANCEL,
-                                                 _("OK"), Gtk.ResponseType.OK))
+        chooser = Gtk.FileChooserNative.new(_("Open Folder"),
+                                            self._window,
+                                            Gtk.FileChooserAction.SELECT_FOLDER)
         response = chooser.run()
-        if response == Gtk.ResponseType.OK:
+        if response == Gtk.ResponseType.ACCEPT:
             f = chooser.get_filename()
             self.change_output_label.props.label = f
             chooser.destroy()
