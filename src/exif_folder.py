@@ -4,7 +4,7 @@ from locale import gettext as _
 gi.require_version('Gtk', '3.0')
 gi.require_version('Handy', '1')
 from gi.repository import Gtk, Gio, GLib, Handy, Gdk, GObject
-from .helpers import get_files_and_folders
+from .helpers import get_files_and_folders, clear_metadata
 
 
 @Gtk.Template(resource_path="/com/github/Latesil/exif-remover/ui/ExifFolder.ui")
@@ -71,9 +71,23 @@ class ExifFolder(Gtk.Box):
     @Gtk.Template.Callback()
     def on_clear_exif_folder_clicked(self, button):
         if self.files_to_process:
-            files = [f.path for f in self.files_to_process]
-            print(files)
-
+            for file in self.files_to_process:
+                input_file = Gio.File.new_for_path(GLib.build_pathv(GLib.DIR_SEPARATOR_S, [
+                                                                    file.path]))
+                output_file = Gio.File.new_for_path(GLib.build_pathv(GLib.DIR_SEPARATOR_S, [
+                                                                     GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PICTURES),
+                                                                     'cleared',
+                                                                     file.basename]))
+                try:
+                    input_file.copy(output_file, Gio.FileCopyFlags.NONE)
+                except GLib.Error as err:
+                    if err.code == 2:  # file exists
+                        print('skipped: ', file.path)
+                        continue
+                clear_metadata(input_file, output_file)
+        else:
+            print('There is no files to process')
+            return
 
     @Gtk.Template.Callback()
     def on_show_files_button_clicked(self, button):

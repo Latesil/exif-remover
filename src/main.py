@@ -19,7 +19,8 @@ import sys
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('Handy', '1')
-from gi.repository import Gtk, Gio, Handy, GObject, Gdk
+gi.require_version('GExiv2', '0.10')
+from gi.repository import Gtk, Gio, Handy, GObject, Gdk, GExiv2
 from .window import ExifRemoverWindow
 
 
@@ -38,6 +39,7 @@ class Application(Gtk.Application):
 
     def do_startup(self):
         Gtk.Application.do_startup(self)
+        GExiv2.initialize()
         Handy.init()
 
     def _init_style(self):

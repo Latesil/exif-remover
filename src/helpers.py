@@ -1,4 +1,5 @@
 import gi
+
 gi.require_version('GExiv2', '0.10')
 from gi.repository import GExiv2, Gio, GLib
 from typing import Tuple, List, Optional
@@ -26,18 +27,19 @@ def get_files_and_folders(folder, absolute_folders_paths=True) -> Tuple[List[str
 
     return folder_list, files_list
 
-# def clear_metadata(input_file, output_file):
-#     exif: GExiv2.Metadata = GExiv2.Metadata()
-#     exif.open_path(input_file.get_path())
 
-#     exif.clear_comment()
-#     exif.clear_exif()
-#     exif.clear_iptc()
-#     exif.clear_xmp()
-#     exif.delete_gps_info()
+def clear_metadata(input_file, output_file):
+    exif: GExiv2.Metadata = GExiv2.Metadata()
+    exif.open_path(input_file.get_path())
 
-#     #TODO
-#     #exif.erase_exif_thumbnail()
+    exif.clear_comment()
+    exif.clear_exif()
+    exif.clear_iptc()
+    exif.clear_xmp()
+    exif.delete_gps_info()
 
-#     exif.clear()
-#     exif.save_file(output_file.get_path())
+    # TODO
+    # exif.erase_exif_thumbnail()
+
+    exif.clear()
+    exif.save_file(output_file.get_path())
