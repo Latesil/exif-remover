@@ -44,7 +44,7 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
     # main_info_label = Gtk.Template.Child()
     # preferences_dialog = Gtk.Template.Child()
     left_header = Gtk.Template.Child()
-    # main_box = Gtk.Template.Child()
+    main_revealer = Gtk.Template.Child()
     # main_list_box = Gtk.Template.Child()
 
     def __init__(self, app, **kwargs):
@@ -132,7 +132,18 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
     # def on_rename_entry_changed(self, entry):
     #     self.settings.set_string('output-filename', entry.get_text())
 
+    @Gtk.Template.Callback()
+    def on__revealer_close_button_clicked(self, button):
+        self.settings.set_boolean('done', False)
+
+    @Gtk.Template.Callback()
+    def on__main_revealer_button_clicked(self, button):
+        print('on__main_revealer_button_clicked')
+
     # TODO open output in in-app notification
     def on_done_change(self, settings, key, button):
-        settings.set_boolean(key, True)
+        if settings.get_boolean(key):
+            self.main_revealer.set_reveal_child(True)
+        else:
+            self.main_revealer.set_reveal_child(False)
 
