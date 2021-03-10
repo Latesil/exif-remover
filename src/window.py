@@ -57,13 +57,10 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
         self.main_stack.connect("notify::visible-child", self._on_main_stack_visible_child_changed)
         self.main_stack.add_named(self.start_view, self.start_view.props.title)
         self.main_stack.add_named(self.folders_view, self.folders_view.props.title)
+        self.settings.connect("changed::done", self.on_done_change, None)
 
-        # self.settings.connect("changed::folder-quantity", self.on_folder_quantity_changed, None)
-
-        # if self.settings.get_string("output-filename") == "":
-        #     self.settings.reset('output-filename')
-
-        # self.rename_checkbox.set_active(self.settings.get_boolean("rename"))
+        if self.settings.get_string("output-filename") == "":
+            self.settings.reset('output-filename')
 
     def _on_main_stack_visible_child_changed(self, k, v):
         self.props.active_view = self.main_stack.props.visible_child
@@ -136,4 +133,6 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
     #     self.settings.set_string('output-filename', entry.get_text())
 
     # TODO open output in in-app notification
+    def on_done_change(self, settings, key, button):
+        settings.set_boolean(key, True)
 

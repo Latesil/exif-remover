@@ -16,5 +16,10 @@
           <summary>Should files be renamed</summary>
           <description>Determine whether files should be renamed. Renaming files is a process of adding quantity prefix at the end of the filename</description>
         </key>
+        <key type="b" name="done">
+          <default>false</default>
+          <summary>All done</summary>
+          <description>All metadata from all files are cleaned</description>
+        </key>
 	</schema>
 </schemalist>

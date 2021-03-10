@@ -76,6 +76,7 @@ class ExifFolder(Gtk.Box):
     @Gtk.Template.Callback()
     def on_clear_exif_folder_clicked(self, button):
         n = 1
+        self.settings.set_boolean('done', False)
         output_folder = self.settings.get_string("output-folder")
         if output_folder == "":
             output_folder = GLib.build_pathv(
@@ -89,6 +90,7 @@ class ExifFolder(Gtk.Box):
             self.files_to_process = self.files_in_view
 
         if self.files_to_process:
+            count_files_to_process = len(self.files_to_process)
             for file in self.files_to_process:
                 input_file = Gio.File.new_for_path(
                     GLib.build_pathv(GLib.DIR_SEPARATOR_S, [file.get_path()])
@@ -125,6 +127,10 @@ class ExifFolder(Gtk.Box):
                 thread.start()
 
                 n += 1
+                count_files_to_process -= 1
+
+                if count_files_to_process == 0:
+                    self.settings.set_boolean('done', True)
         else:
             print('There is no files to process')
             return
