@@ -1,5 +1,7 @@
 import gi
 from locale import gettext as _
+import threading
+import time
 
 gi.require_version('Gtk', '3.0')
 gi.require_version('Handy', '1')
@@ -118,7 +120,12 @@ class ExifFolder(Gtk.Box):
                     else:
                         print(err.domain, ':', err.message, 'code:', err.code)
                         return
-                clear_metadata(input_file, output_file)
+
+                thread = threading.Thread(target=self.clean_file_metadata, args=[input_file, output_file])
+                thread.daemon = True
+                thread.start()
+
+                # clear_metadata(input_file, output_file)
                 n += 1
         else:
             print('There is no files to process')
@@ -158,3 +165,10 @@ class ExifFolder(Gtk.Box):
     def on_reset_folder_button_clicked(self, button):
         self.settings.reset("output-folder")
         self.reset_folder_revealer.set_reveal_child(False)
+
+    def clean_file_metadata(self, input, output):
+        GLib.idle_add(self.trigger_metadata_clean, input, output)
+        time.sleep(0.2)  # need this for some reason
+
+    def trigger_metadata_clean(self, input, output):
+        clear_metadata(input, output)
