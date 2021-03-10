@@ -46,7 +46,7 @@ class ExifFolder(Gtk.Box):
             except ValueError:
                 ext = ""
 
-            if ext in self.allowed_files and not name.startswith('.'):
+            if ext.lower() in self.allowed_files and not name.startswith('.'):
                 self.files_in_view.append(simple_file)
         self.show_files_row.props.subtitle = str(len(self.files_in_view))
 
@@ -93,7 +93,6 @@ class ExifFolder(Gtk.Box):
                     GLib.build_pathv(GLib.DIR_SEPARATOR_S, [file.get_path()])
                 )
 
-                # check if need to rename and correct name
                 if self.settings.get_boolean('rename'):
                     if self.settings.get_string("output-filename") == "":
                         self.settings.reset('output-filename')
@@ -109,11 +108,12 @@ class ExifFolder(Gtk.Box):
                         ]
                     )
                 )
+
                 try:
                     input_file.copy(output_file, Gio.FileCopyFlags.NONE)
                 except GLib.Error as err:
                     if err.code == 2:  # file exists
-                        print('skipped: ', file.get_path())
+                        print('skipped: ', output_file.get_path())
                         continue
                     else:
                         print(err.domain, ':', err.message, 'code:', err.code)
