@@ -24,6 +24,7 @@ class ExifFolder(Gtk.Box):
         super().__init__()
         self._application = app
         self._window = app.props.window
+        self.settings = Gio.Settings.new('com.github.Latesil.exif-remover')
         self.props.path = path
 
         if self.props.path is None:
@@ -71,6 +72,13 @@ class ExifFolder(Gtk.Box):
     @Gtk.Template.Callback()
     def on_clear_exif_folder_clicked(self, button):
         output_folder = self.settings.get_string("output-filename")
+        if output_folder is None:
+            output_folder = GLib.build_pathv(
+                GLib.DIR_SEPARATOR_S, [
+                    GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PICTURES),
+                    'cleared'
+                ]
+            )
         if self.files_to_process:
             for file in self.files_to_process:
                 input_file = Gio.File.new_for_path(
@@ -79,7 +87,6 @@ class ExifFolder(Gtk.Box):
                 output_file = Gio.File.new_for_path(
                     GLib.build_pathv(
                         GLib.DIR_SEPARATOR_S, [
-                            GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PICTURES),
                             output_folder,
                             file.basename
                         ]
@@ -91,6 +98,9 @@ class ExifFolder(Gtk.Box):
                     if err.code == 2:  # file exists
                         print('skipped: ', file.path)
                         continue
+                    else:
+                        print(err.domain, err.message, err.code)
+                        return
                 clear_metadata(input_file, output_file)
         else:
             print('There is no files to process')
@@ -109,13 +119,17 @@ class ExifFolder(Gtk.Box):
 
     @Gtk.Template.Callback()
     def on_set_folder_button_clicked(self, button):
+        # TODO: reset folder
         chooser = Gtk.FileChooserNative.new(_("Open Folder"),
                                             self._window,
                                             Gtk.FileChooserAction.SELECT_FOLDER)
         response = chooser.run()
         if response == Gtk.ResponseType.ACCEPT:
             f = chooser.get_filename()
-            self.change_output_label.props.label = f
+            if self.settings.set_string("output-filename", f):
+                self.change_output_label.props.label = f
+            else:
+                print('Sorry, folder:', f, 'was not writable')
             chooser.destroy()
         else:
             chooser.destroy()
