@@ -53,6 +53,7 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
         self._app = app
         self.start_view = StartView()
         self.folders_view = FoldersView()
+        self.recent_folder = ""
         self.rename_checkbox.set_active(self.settings.get_boolean("rename"))
         self.main_stack.connect("notify::visible-child", self._on_main_stack_visible_child_changed)
         self.main_stack.add_named(self.start_view, self.start_view.props.title)
@@ -138,7 +139,8 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
 
     @Gtk.Template.Callback()
     def on__main_revealer_button_clicked(self, button):
-        print('on__main_revealer_button_clicked')
+        if self.recent_folder != "":
+            GLib.spawn_async(['/usr/bin/xdg-open', self.recent_folder])
 
     # TODO open output in in-app notification
     def on_done_change(self, settings, key, button):

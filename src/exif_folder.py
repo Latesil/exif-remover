@@ -131,6 +131,7 @@ class ExifFolder(Gtk.Box):
 
                 if count_files_to_process == 0:
                     self.settings.set_boolean('done', True)
+                    self._window.recent_folder = output_folder
         else:
             print('There is no files to process')
             return
