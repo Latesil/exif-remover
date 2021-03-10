@@ -75,7 +75,6 @@ class ExifFolder(Gtk.Box):
 
     @Gtk.Template.Callback()
     def on_clear_exif_folder_clicked(self, button):
-        # TODO async
         n = 1
         output_folder = self.settings.get_string("output-folder")
         if output_folder == "":
@@ -125,7 +124,6 @@ class ExifFolder(Gtk.Box):
                 thread.daemon = True
                 thread.start()
 
-                # clear_metadata(input_file, output_file)
                 n += 1
         else:
             print('There is no files to process')
