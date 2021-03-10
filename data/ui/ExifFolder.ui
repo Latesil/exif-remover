@@ -140,6 +140,23 @@
                                   </style>
                                 </object>
                               </child>
+                              <child>
+                                <object class="GtkRevealer" id="reset_folder_revealer">
+                                  <property name="visible">True</property>
+                                  <property name="transition-type">slide-left</property>
+                                  <child>
+                                    <object class="GtkButton">
+                                      <property name="visible">True</property>
+                                      <property name="valign">center</property>
+                                      <property name="label">Reset</property>
+                                      <signal name="clicked" handler="on_reset_folder_button_clicked" swapped="no"/>
+                                      <style>
+                                        <class name="flat"/>
+                                      </style>
+                                    </object>
+                                  </child>
+                                </object>
+                              </child>
                             </object>
                           </child>
                         </object>

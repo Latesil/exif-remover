@@ -19,6 +19,7 @@ class ExifFolder(Gtk.Box):
     change_output_label = Gtk.Template.Child()
     show_files_button = Gtk.Template.Child()
     show_files_row = Gtk.Template.Child()
+    reset_folder_revealer = Gtk.Template.Child()
 
     def __init__(self, app, path):
         super().__init__()
@@ -72,8 +73,8 @@ class ExifFolder(Gtk.Box):
 
     @Gtk.Template.Callback()
     def on_clear_exif_folder_clicked(self, button):
-        output_folder = self.settings.get_string("output-filename")
-        if output_folder is None:
+        output_folder = self.settings.get_string("output-folder")
+        if output_folder == "":
             output_folder = GLib.build_pathv(
                 GLib.DIR_SEPARATOR_S, [
                     GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PICTURES),
@@ -125,17 +126,23 @@ class ExifFolder(Gtk.Box):
 
     @Gtk.Template.Callback()
     def on_set_folder_button_clicked(self, button):
-        # TODO: reset folder
+        self.reset_folder_revealer.set_reveal_child(True)
         chooser = Gtk.FileChooserNative.new(_("Open Folder"),
                                             self._window,
                                             Gtk.FileChooserAction.SELECT_FOLDER)
         response = chooser.run()
         if response == Gtk.ResponseType.ACCEPT:
             f = chooser.get_filename()
-            if self.settings.set_string("output-filename", f):
+            if self.settings.set_string("output-folder", f):
                 self.change_output_label.props.label = f
             else:
                 print('Sorry, folder:', f, 'was not writable')
             chooser.destroy()
         else:
+            self.reset_folder_revealer.set_reveal_child(False)
             chooser.destroy()
+
+    @Gtk.Template.Callback()
+    def on_reset_folder_button_clicked(self, button):
+        self.settings.reset("output-folder")
+        self.reset_folder_revealer.set_reveal_child(False)
