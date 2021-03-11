@@ -37,15 +37,9 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
     main_stack = Gtk.Template.Child()
     back_button = Gtk.Template.Child()
     add_button = Gtk.Template.Child()
-    # open_output_folder_button = Gtk.Template.Child()
     rename_checkbox = Gtk.Template.Child()
-    # preferences_button = Gtk.Template.Child()
-    # rename_entry = Gtk.Template.Child()
-    # main_info_label = Gtk.Template.Child()
-    # preferences_dialog = Gtk.Template.Child()
     left_header = Gtk.Template.Child()
     main_revealer = Gtk.Template.Child()
-    # main_list_box = Gtk.Template.Child()
 
     def __init__(self, app, **kwargs):
         super().__init__(application=app, **kwargs)
@@ -142,7 +136,6 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
         if self.recent_folder != "":
             GLib.spawn_async(['/usr/bin/xdg-open', self.recent_folder])
 
-    # TODO open output in in-app notification
     def on_done_change(self, settings, key, button):
         if settings.get_boolean(key):
             self.main_revealer.set_reveal_child(True)
