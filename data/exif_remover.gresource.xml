@@ -9,6 +9,7 @@
     <file>ui/FilesView.ui</file>
     <file>ui/ExifFile.ui</file>
     <file>ui/about_dialog.ui</file>
+    <file>ui/preferences.ui</file>
     <file>com.github.Latesil.exif-remover.css</file>
   </gresource>
 </gresources>

@@ -29,6 +29,7 @@ exif_remover_sources = [
   'files_view.py',
   'exif_file.py',
   'AboutDialog.py',
+  'preferences.py',
 ]
 
 install_data(exif_remover_sources, install_dir: moduledir)

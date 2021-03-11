@@ -25,6 +25,7 @@ from .folders_view import FoldersView
 from .exif_folder import ExifFolder
 from .files_view import FilesView
 from .AboutDialog import AboutWindow
+from .preferences import PreferencesWindow
 
 
 @Gtk.Template(resource_path='/com/github/Latesil/exif-remover/ui/window.ui')
@@ -110,22 +111,16 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
         else:
             self.settings.set_boolean('rename', False)
 
-    # @Gtk.Template.Callback()
-    # def on_preferences_button_clicked(self, button):
-    #     preferences = self.preferences_dialog
-    #     self.rename_entry.set_text(self.settings.get_string('output-filename'))
-    #     preferences.run()
-    #     preferences.hide()
+    @Gtk.Template.Callback()
+    def on_preferences_button_clicked(self, button):
+        preferences = PreferencesWindow(self)
+        preferences.show()
 
     @Gtk.Template.Callback()
     def on_about_button_clicked(self, button):
         about = AboutWindow(self)
         about.run()
         about.destroy()
-
-    # @Gtk.Template.Callback()
-    # def on_rename_entry_changed(self, entry):
-    #     self.settings.set_string('output-filename', entry.get_text())
 
     @Gtk.Template.Callback()
     def on__revealer_close_button_clicked(self, button):
