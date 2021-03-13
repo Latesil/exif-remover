@@ -9,193 +9,199 @@
     <property name="margin_end">50</property>
     <property name="margin_top">20</property>
     <property name="margin_bottom">20</property>
-      <child>
-        <object class="GtkFrame">
-          <property name="visible">True</property>
-          <child>
-            <object class="GtkBox" id="exif_folder_box">
-              <property name="visible">True</property>
-              <property name="orientation">vertical</property>
-              <property name="can_focus">False</property>
-              <property name="margin">15</property>
-              <property name="hexpand">True</property>
-              <property name="vexpand">True</property>
-              <child>
-                <object class="GtkBox">
-                  <property name="visible">True</property>
-                  <property name="spacing">10</property>
-                  <property name="margin-bottom">20</property>
-                  <child>
-                    <object class="GtkEventBox" id="image_event_box">
+    <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <child>
+          <object class="GtkFrame">
+            <property name="visible">True</property>
+            <property name="shadow-type">none</property>
+            <child>
+              <object class="GtkBox" id="exif_folder_box">
+                <property name="visible">True</property>
+                <property name="orientation">vertical</property>
+                <property name="can_focus">False</property>
+                <property name="margin">15</property>
+                <property name="hexpand">True</property>
+                <property name="vexpand">True</property>
+                <child>
+                  <object class="GtkBox">
+                    <property name="visible">True</property>
+                    <property name="spacing">10</property>
+                    <property name="margin-bottom">20</property>
+                    <child>
+                      <object class="GtkEventBox" id="image_event_box">
+                        <property name="visible">True</property>
+                        <property name="name">folder-image</property>
+                        <signal name="enter_notify_event" handler="on_enter_notify_event" swapped="no"/>
+                        <signal name="leave_notify_event" handler="on_leave_notify_event" swapped="no"/>
+                        <signal name="button_press_event" handler="on_image_event_box_clicked" swapped="no"/>
+                        <child>
+                          <object class="GtkImage" id="folder_image">
+                            <property name="visible">True</property>
+                            <property name="tooltip-text" translatable="yes">Open folder</property>
+                            <property name="icon-name">folder</property>
+                            <property name="pixel-size">70</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                    <object class="GtkLabel" id="exif_folders_label">
                       <property name="visible">True</property>
-                      <property name="name">folder-image</property>
-                      <signal name="enter_notify_event" handler="on_enter_notify_event" swapped="no"/>
-                      <signal name="leave_notify_event" handler="on_leave_notify_event" swapped="no"/>
-                      <signal name="button_press_event" handler="on_image_event_box_clicked" swapped="no"/>
-                      <child>
-                        <object class="GtkImage" id="folder_image">
-                          <property name="visible">True</property>
-                          <property name="tooltip-text" translatable="yes">Open folder</property>
-                          <property name="icon-name">folder</property>
-                          <property name="pixel-size">70</property>
-                        </object>
-                      </child>
+                      <property name="can-focus">False</property>
+                      <property name="halign">center</property>
+                      <property name="justify">center</property>
+                      <attributes>
+                        <attribute name="size" value="15360"/>
+                      </attributes>
                     </object>
                   </child>
-                  <child>
-                  <object class="GtkLabel" id="exif_folders_label">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="halign">center</property>
-                    <property name="justify">center</property>
-                    <attributes>
-                      <attribute name="size" value="15360"/>
-                    </attributes>
                   </object>
                 </child>
-                </object>
-              </child>
-              <child>
-                <object class="GtkBox">
-                  <property name="visible">True</property>
-                  <property name="orientation">vertical</property>
-                  <child>
-                    <object class="HdyPreferencesGroup">
-                      <property name="visible">True</property>
-                      <child>
-                        <object class="HdyActionRow" id="show_files_row">
-                          <property name="visible">True</property>
-                          <property name="selectable">False</property>
-                          <property name="use_underline">True</property>
-                          <property name="title">Files:</property>
-                          <property name="subtitle">0</property>
-                          <property name="icon-name">image-x-generic</property>
-                          <property name="activatable-widget">show_files_button</property>
-                          <child>
-                            <object class="GtkButton" id="show_files_button">
-                              <property name="visible">True</property>
-                              <property name="valign">center</property>
-                              <property name="label">Show</property>
-                              <signal name="clicked" handler="on_show_files_button_clicked" swapped="no"/>
-                              <style>
-                                <class name="flat"/>
-                              </style>
-                            </object>
-                          </child>
-                        </object>
-                      </child>
-                      <child>
-                        <object class="HdyActionRow">
-                          <property name="visible">True</property>
-                          <property name="selectable">False</property>
-                          <property name="use_underline">True</property>
-                          <property name="icon-name">preferences-system</property>
-                          <property name="title">Output:</property>
-                          <child>
-                            <object class="GtkComboBoxText" id="change_output_box">
-                              <property name="visible">True</property>
-                              <property name="can-focus">False</property>
-                              <property name="halign">end</property>
-                              <property name="valign">center</property>
-                              <property name="active">0</property>
-                              <property name="active-id">0</property>
-                              <items>
-                                <item id="0" translatable="yes">Same Folder</item>
-                                <item id="1" translatable="yes">Different Folder</item>
-                              </items>
-                              <signal name="changed" handler="on_change_output_box_changed" swapped="no"/>
-                            </object>
-                          </child>
-                        </object>
-                      </child>
-                      <child>
-                        <object class="HdyActionRow" id="set_folder_row">
-                          <property name="selectable">False</property>
-                          <property name="use_underline">True</property>
-                          <property name="icon-name">folder</property>
-                          <property name="title">Output Folder:</property>
-                          <property name="activatable-widget">set_folder_button</property>
-                          <child>
-                            <object class="GtkBox">
-                              <property name="visible">True</property>
-                              <property name="spacing">10</property>
-                              <child>
-                                <object class="GtkLabel" id="change_output_label">
-                                  <property name="visible">True</property>
-                                  <property name="valign">center</property>
-                                  <property name="label">/new/output/folder</property>
-                                  <attributes>
-                                    <attribute name="foreground" value="#88888a8a8585"/>
-                                  </attributes>
-                                </object>
-                              </child>
-                              <child>
-                                <object class="GtkButton" id="set_folder_button">
-                                  <property name="visible">True</property>
-                                  <property name="valign">center</property>
-                                  <property name="label">Set</property>
-                                  <signal name="clicked" handler="on_set_folder_button_clicked" swapped="no"/>
-                                  <style>
-                                    <class name="flat"/>
-                                  </style>
-                                </object>
-                              </child>
-                              <child>
-                                <object class="GtkRevealer" id="reset_folder_revealer">
-                                  <property name="visible">True</property>
-                                  <property name="transition-type">slide-left</property>
-                                  <child>
-                                    <object class="GtkButton">
-                                      <property name="visible">True</property>
-                                      <property name="valign">center</property>
-                                      <property name="label">Reset</property>
-                                      <signal name="clicked" handler="on_reset_folder_button_clicked" swapped="no"/>
-                                      <style>
-                                        <class name="flat"/>
-                                      </style>
-                                    </object>
-                                  </child>
-                                </object>
-                              </child>
-                            </object>
-                          </child>
-                        </object>
-                      </child>
-                    </object>
-                  </child>
-                </object>
-              </child>
-              <child>
-                <object class="GtkButtonBox">
-                  <property name="visible">True</property>
-                  <property name="layout-style">end</property>
-                  <property name="margin-top">20</property>
-                  <child>
-                    <object class="GtkButton" id="close_exif_folder_button">
-                      <property name="visible">True</property>
-                      <property name="label">Close</property>
-                      <signal name="clicked" handler="on_close_exif_folder_clicked" swapped="no"/>
-                      <style>
-                        <class name="destructive-action"/>
-                        <class name="flat"/>
-                      </style>
-                    </object>
-                  </child>
-                  <child>
-                    <object class="GtkButton" id="clear_exif_folder_button">
-                      <property name="visible">True</property>
-                      <property name="label">Clear</property>
-                      <signal name="clicked" handler="on_clear_exif_folder_clicked" swapped="no"/>
-                      <style>
-                        <class name="suggested-action"/>
-                      </style>
-                    </object>
-                  </child>
-                </object>
-              </child>
-            </object>
+                <child>
+                  <object class="GtkBox">
+                    <property name="visible">True</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="HdyPreferencesGroup">
+                        <property name="visible">True</property>
+                        <child>
+                          <object class="HdyActionRow" id="show_files_row">
+                            <property name="visible">True</property>
+                            <property name="selectable">False</property>
+                            <property name="use_underline">True</property>
+                            <property name="title">Files:</property>
+                            <property name="subtitle">0</property>
+                            <property name="icon-name">image-x-generic</property>
+                            <property name="activatable-widget">show_files_button</property>
+                            <child>
+                              <object class="GtkButton" id="show_files_button">
+                                <property name="visible">True</property>
+                                <property name="valign">center</property>
+                                <property name="label">Show</property>
+                                <signal name="clicked" handler="on_show_files_button_clicked" swapped="no"/>
+                                <style>
+                                  <class name="flat"/>
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="HdyActionRow">
+                            <property name="visible">True</property>
+                            <property name="selectable">False</property>
+                            <property name="use_underline">True</property>
+                            <property name="icon-name">preferences-system</property>
+                            <property name="title">Output:</property>
+                            <child>
+                              <object class="GtkComboBoxText" id="change_output_box">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="halign">end</property>
+                                <property name="valign">center</property>
+                                <property name="active">0</property>
+                                <property name="active-id">0</property>
+                                <items>
+                                  <item id="0" translatable="yes">Same Folder</item>
+                                  <item id="1" translatable="yes">Different Folder</item>
+                                </items>
+                                <signal name="changed" handler="on_change_output_box_changed" swapped="no"/>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="HdyActionRow" id="set_folder_row">
+                            <property name="selectable">False</property>
+                            <property name="use_underline">True</property>
+                            <property name="icon-name">folder</property>
+                            <property name="title">Output Folder:</property>
+                            <property name="activatable-widget">set_folder_button</property>
+                            <child>
+                              <object class="GtkBox">
+                                <property name="visible">True</property>
+                                <property name="spacing">10</property>
+                                <child>
+                                  <object class="GtkLabel" id="change_output_label">
+                                    <property name="visible">True</property>
+                                    <property name="valign">center</property>
+                                    <property name="label">/new/output/folder</property>
+                                    <attributes>
+                                      <attribute name="foreground" value="#88888a8a8585"/>
+                                    </attributes>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkButton" id="set_folder_button">
+                                    <property name="visible">True</property>
+                                    <property name="valign">center</property>
+                                    <property name="label">Set</property>
+                                    <signal name="clicked" handler="on_set_folder_button_clicked" swapped="no"/>
+                                    <style>
+                                      <class name="flat"/>
+                                    </style>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkRevealer" id="reset_folder_revealer">
+                                    <property name="visible">True</property>
+                                    <property name="transition-type">slide-left</property>
+                                    <child>
+                                      <object class="GtkButton">
+                                        <property name="visible">True</property>
+                                        <property name="valign">center</property>
+                                        <property name="label">Reset</property>
+                                        <signal name="clicked" handler="on_reset_folder_button_clicked" swapped="no"/>
+                                        <style>
+                                          <class name="flat"/>
+                                        </style>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButtonBox">
+                    <property name="visible">True</property>
+                    <property name="layout-style">end</property>
+                    <property name="margin-top">20</property>
+                    <child>
+                      <object class="GtkButton" id="close_exif_folder_button">
+                        <property name="visible">True</property>
+                        <property name="label">Close</property>
+                        <signal name="clicked" handler="on_close_exif_folder_clicked" swapped="no"/>
+                        <style>
+                          <class name="destructive-action"/>
+                          <class name="flat"/>
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="clear_exif_folder_button">
+                        <property name="visible">True</property>
+                        <property name="label">Clear</property>
+                        <signal name="clicked" handler="on_clear_exif_folder_clicked" swapped="no"/>
+                        <style>
+                          <class name="suggested-action"/>
+                        </style>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+          </child>
+          </object>
         </child>
-        </object>
-      </child>
+      </object>
+    </child>
   </template>
 </interface>
