@@ -143,6 +143,7 @@ class ExifFolder(Gtk.Box):
 
     @Gtk.Template.Callback()
     def on_change_output_box_changed(self, box):
+        # TODO check same folder
         if box.props.active == 0:
             self.set_folder_row.props.visible = False
         else:
