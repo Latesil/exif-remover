@@ -14,6 +14,7 @@ class ExifFolder(Gtk.Box):
     __gtype_name__ = "ExifFolder"
 
     path = GObject.Property(type=str, default=None)
+    same_folder = GObject.Property(type=bool, default=True)
 
     exif_folders_label = Gtk.Template.Child()
     set_folder_row = Gtk.Template.Child()
@@ -36,6 +37,7 @@ class ExifFolder(Gtk.Box):
             return
 
         self.path = self.props.path
+        self.custom_path_set = False
         self.exif_folders_label.props.label = self.path
         self.allowed_files = ['jpg', 'png', 'jpeg']
         self.files_in_view = []
@@ -77,14 +79,28 @@ class ExifFolder(Gtk.Box):
     def on_clear_exif_folder_clicked(self, button):
         n = 1
         self.settings.set_boolean('done', False)
-        output_folder = self.settings.get_string("output-folder")
-        if output_folder == "":
-            output_folder = GLib.build_pathv(
-                GLib.DIR_SEPARATOR_S, [
-                    GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PICTURES),
-                    'cleared'
-                ]
-            )
+        output_folder_path = self.settings.get_string("output-folder")  # "" by default
+        output_final_folder = 'cleared'  # TODO not hardcode
+
+        if self.props.same_folder:  # same where file was
+            if output_folder_path == "":
+                output_folder_path = GLib.build_pathv(GLib.DIR_SEPARATOR_S, [
+                    self.path, output_final_folder
+                ])
+        else:
+            if output_folder_path == "":
+                output_folder_path = GLib.build_pathv(
+                    GLib.DIR_SEPARATOR_S, [
+                        GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PICTURES),
+                        output_final_folder
+                    ]
+                )
+
+        output_folder_path_file = Gio.File.new_for_path(output_folder_path)
+        if not GLib.file_test(output_folder_path, GLib.FileTest.EXISTS | GLib.FileTest.IS_DIR):
+            Gio.File.make_directory(output_folder_path_file)
+
+        print('output folder path will be:', output_folder_path)
 
         if self.all_photos_to_process:
             self.files_to_process = self.files_in_view
@@ -106,7 +122,7 @@ class ExifFolder(Gtk.Box):
                 output_file = Gio.File.new_for_path(
                     GLib.build_pathv(
                         GLib.DIR_SEPARATOR_S, [
-                            output_folder,
+                            output_folder_path,
                             name
                         ]
                     )
@@ -131,7 +147,7 @@ class ExifFolder(Gtk.Box):
 
                 if count_files_to_process == 0:
                     self.settings.set_boolean('done', True)
-                    self._window.recent_folder = output_folder
+                    self._window.recent_folder = output_folder_path
         else:
             print('There is no files to process')
             return
@@ -143,14 +159,21 @@ class ExifFolder(Gtk.Box):
 
     @Gtk.Template.Callback()
     def on_change_output_box_changed(self, box):
-        # TODO check same folder
-        if box.props.active == 0:
+        if box.props.active == 0:  # same folders
             self.set_folder_row.props.visible = False
+            self.props.same_folder = True
+            self.settings.reset("output-folder")
+            self.custom_path_set = False
         else:
             self.set_folder_row.props.visible = True
+            self.props.same_folder = False
+            if self.change_output_label.props.label != '/new/output/folder':
+                self.settings.set_string("output-folder", self.change_output_label.props.label)
+                self.custom_path_set = True
 
     @Gtk.Template.Callback()
     def on_set_folder_button_clicked(self, button):
+        self.custom_path_set = True
         self.reset_folder_revealer.set_reveal_child(True)
         chooser = Gtk.FileChooserNative.new(_("Open Folder"),
                                             self._window,
@@ -171,10 +194,12 @@ class ExifFolder(Gtk.Box):
     def on_reset_folder_button_clicked(self, button):
         self.settings.reset("output-folder")
         self.reset_folder_revealer.set_reveal_child(False)
+        self.change_output_label.props.label = '/new/output/folder'
+        self.custom_path_set = False
 
     def clean_file_metadata(self, input, output):
         GLib.idle_add(self.trigger_metadata_clean, input, output)
         time.sleep(0.2)  # need this for some reason
 
-    def trigger_metadata_clean(self, input, output):
-        clear_metadata(input, output)
+    def trigger_metadata_clean(self, i, o):
+        clear_metadata(i, o)

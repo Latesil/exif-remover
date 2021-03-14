@@ -74,7 +74,7 @@
   <template class="ExifRemoverWindow" parent="HdyApplicationWindow">
     <property name="can_focus">False</property>
     <property name="default_width">800</property>
-    <property name="default_height">380</property>
+    <property name="default_height">420</property>
     <property name="title" translatable="yes">EXIF Remover</property>
     <child>
       <object class="GtkBox">
