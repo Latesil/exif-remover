@@ -19,6 +19,7 @@ from locale import gettext as _
 from typing import Tuple, Any, List
 
 import gi
+
 gi.require_version('Gtk', '3.0')
 gi.require_version('Handy', '1')
 from gi.repository import Gtk, Gio, GLib, Handy, GObject, Gdk
@@ -65,26 +66,22 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
         self.content_box.drag_dest_set_target_list(None)
         self.content_box.drag_dest_add_text_targets()
 
-
     def _on_main_stack_visible_child_changed(self, k, v):
         self.props.active_view = self.main_stack.props.visible_child
         if self.props.active_view.get_name() == 'FilesView':
             self.add_button.props.visible = False
             self.back_button.props.visible = True
+        elif self.props.active_view.get_name() == 'FoldersView':
+            self.add_button.props.visible = False
         else:
             self.add_button.props.visible = True
             self.back_button.props.visible = False
 
-        if self.props.active_view.get_name() == 'FoldersView':
-            self.add_button.props.visible = False
-        else:
-            self.add_button.props.visible = True
-
     @Gtk.Template.Callback()
     def on_add_button_clicked(self, button):
         chooser = Gtk.FileChooserNative.new(_("Open Folder"),
-                                        self,
-                                        Gtk.FileChooserAction.SELECT_FOLDER)
+                                            self,
+                                            Gtk.FileChooserAction.SELECT_FOLDER)
         response = chooser.run()
         if response == Gtk.ResponseType.ACCEPT:
             path = chooser.get_filename()
@@ -166,5 +163,3 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
                 raise GLib.Error(message=f'Error: {folder_path} is not a folder or it is not accessible')
         except GLib.Error as err:
             print('%s' % err.message)
-
-
