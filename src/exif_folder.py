@@ -116,8 +116,6 @@ class ExifFolder(Gtk.Box):
         if not GLib.file_test(output_folder_path, GLib.FileTest.EXISTS | GLib.FileTest.IS_DIR):
             Gio.File.make_directory(output_folder_path_file)
 
-        print('output folder path will be:', output_folder_path)
-
         if self.all_photos_to_process:
             self.files_to_process = self.files_in_view
 
