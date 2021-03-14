@@ -41,10 +41,6 @@ class FilesView(Gtk.Stack):
         self._window = self.app.props.window
         self.headerbar = self._window.left_header
         self.files = files
-
-        if self._window.add_button.props.visible:
-            self._window.add_button.props.visible = False
-
         self.connect('notify::title', self.on_title_changed)
         self.files_view_container.set_hadjustment(self.files_view_scrolled_window.get_vadjustment())
         self.files_view_container.set_vadjustment(self.files_view_scrolled_window.get_hadjustment())

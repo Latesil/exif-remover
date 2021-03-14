@@ -107,12 +107,7 @@ class ExifFolder(Gtk.Box):
                     GLib.build_pathv(GLib.DIR_SEPARATOR_S, [file.get_path()])
                 )
 
-                if self.settings.get_boolean('rename'):
-                    if self.settings.get_string("output-filename") == "":
-                        self.settings.reset('output-filename')
-                    name = self.settings.get_string('output-filename') + "_" + str(n)
-                else:
-                    name = input_file.get_basename()
+                name = self.get_output_filename(file, n)
 
                 output_file = Gio.File.new_for_path(
                     GLib.build_pathv(
@@ -222,3 +217,13 @@ class ExifFolder(Gtk.Box):
             Gio.File.make_directory(output_folder_path_file)
 
         return output_folder_path
+
+    def get_output_filename(self, file, n):
+        if self.settings.get_boolean('rename'):
+            if self.settings.get_string("output-filename") == "":
+                self.settings.reset('output-filename')
+            name = self.settings.get_string('output-filename') + "_" + str(n)
+        else:
+            name = file.get_basename()
+
+        return name
