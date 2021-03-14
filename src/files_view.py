@@ -1,12 +1,8 @@
 import threading
 import time
-
 import gi
-
 gi.require_version('Gtk', '3.0')
-gi.require_version('Handy', '1')
-from gi.repository import Gtk, Gio, GLib, GObject
-from .helpers import get_files_and_folders
+from gi.repository import Gtk, GLib, GObject
 from .exif_file import ExifFile
 
 
