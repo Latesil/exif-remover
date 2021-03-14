@@ -16,10 +16,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from locale import gettext as _
+from typing import Tuple, Any, List
+
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('Handy', '1')
-from gi.repository import Gtk, Gio, GLib, Handy, GObject
+from gi.repository import Gtk, Gio, GLib, Handy, GObject, Gdk
 from .start_view import StartView
 from .folders_view import FoldersView
 from .exif_folder import ExifFolder
@@ -57,6 +59,12 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
 
         if self.settings.get_string("output-filename") == "":
             self.settings.reset('output-filename')
+
+        self.content_box.drag_dest_set(Gtk.DestDefaults.ALL, [], Gdk.DragAction.COPY)
+        self.content_box.connect("drag-data-received", self.on_drag_data_received)
+        self.content_box.drag_dest_set_target_list(None)
+        self.content_box.drag_dest_add_text_targets()
+
 
     def _on_main_stack_visible_child_changed(self, k, v):
         self.props.active_view = self.main_stack.props.visible_child
@@ -141,4 +149,22 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
             self.main_revealer.set_reveal_child(True)
         else:
             self.main_revealer.set_reveal_child(False)
+
+    def on_drag_data_received(
+            self, widget: Gtk.Widget, drag_context: Gdk.DragContext,
+            x: int, y: int, data: Gtk.SelectionData, info: int, time: int
+    ) -> None:
+        drop_source: Tuple[str, Any] = GLib.filename_from_uri(data.get_text())
+        folder_path: str = drop_source[0].rstrip()
+        try:
+            if GLib.file_test(folder_path, GLib.FileTest.IS_DIR):
+                new_box = ExifFolder(self._app, path=folder_path)
+                if self.props.active_view.get_name() != 'FoldersView':
+                    self.main_stack.set_visible_child_name("foldersview")
+                    self.folders_view.add_folder_to_view(new_box)
+            else:
+                raise GLib.Error(message=f'Error: {folder_path} is not a folder or it is not accessible')
+        except GLib.Error as err:
+            print('%s' % err.message)
+
 
