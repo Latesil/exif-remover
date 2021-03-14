@@ -95,26 +95,7 @@ class ExifFolder(Gtk.Box):
     def on_clear_exif_folder_clicked(self, button):
         n = 1
         self.settings.set_boolean('done', False)
-        output_folder_path = self.settings.get_string("output-folder")  # "" by default
-        output_final_folder = 'cleared'  # TODO not hardcode
-
-        if self.props.same_folder:  # same where file was
-            if output_folder_path == "":
-                output_folder_path = GLib.build_pathv(GLib.DIR_SEPARATOR_S, [
-                    self.path, output_final_folder
-                ])
-        else:
-            if output_folder_path == "":
-                output_folder_path = GLib.build_pathv(
-                    GLib.DIR_SEPARATOR_S, [
-                        GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PICTURES),
-                        output_final_folder
-                    ]
-                )
-
-        output_folder_path_file = Gio.File.new_for_path(output_folder_path)
-        if not GLib.file_test(output_folder_path, GLib.FileTest.EXISTS | GLib.FileTest.IS_DIR):
-            Gio.File.make_directory(output_folder_path_file)
+        output_folder = self.get_output_path()
 
         if self.all_photos_to_process:
             self.files_to_process = self.files_in_view
@@ -136,7 +117,7 @@ class ExifFolder(Gtk.Box):
                 output_file = Gio.File.new_for_path(
                     GLib.build_pathv(
                         GLib.DIR_SEPARATOR_S, [
-                            output_folder_path,
+                            output_folder,
                             name
                         ]
                     )
@@ -161,7 +142,7 @@ class ExifFolder(Gtk.Box):
 
                 if count_files_to_process == 0:
                     self.settings.set_boolean('done', True)
-                    self._window.recent_folder = output_folder_path
+                    self._window.recent_folder = output_folder
         else:
             print('There is no files to process')
             return
@@ -181,7 +162,7 @@ class ExifFolder(Gtk.Box):
         else:
             self.set_folder_row.props.visible = True
             self.props.same_folder = False
-            if self.change_output_label.props.label != '/new/output/folder':
+            if self.change_output_label.props.label != '/new/output/folder':  # not good but...
                 self.settings.set_string("output-folder", self.change_output_label.props.label)
                 self.custom_path_set = True
 
@@ -217,3 +198,27 @@ class ExifFolder(Gtk.Box):
 
     def trigger_metadata_clean(self, i, o):
         clear_metadata(i, o)
+
+    def get_output_path(self):
+        output_folder_path = self.settings.get_string("output-folder")  # "" by default
+        output_final_folder = 'cleared'  # TODO not hardcode
+
+        if self.props.same_folder:  # same where file was
+            if output_folder_path == "":
+                output_folder_path = GLib.build_pathv(GLib.DIR_SEPARATOR_S, [
+                    self.path, output_final_folder
+                ])
+        else:
+            if output_folder_path == "":
+                output_folder_path = GLib.build_pathv(
+                    GLib.DIR_SEPARATOR_S, [
+                        GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PICTURES),
+                        output_final_folder
+                    ]
+                )
+
+        output_folder_path_file = Gio.File.new_for_path(output_folder_path)
+        if not GLib.file_test(output_folder_path, GLib.FileTest.EXISTS | GLib.FileTest.IS_DIR):
+            Gio.File.make_directory(output_folder_path_file)
+
+        return output_folder_path
