@@ -21,7 +21,6 @@ exif_remover_sources = [
   '__init__.py',
   'main.py',
   'window.py',
-  'folder_box.py',
   'helpers.py',
   'start_view.py',
   'folders_view.py',
