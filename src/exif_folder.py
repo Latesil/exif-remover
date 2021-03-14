@@ -196,7 +196,7 @@ class ExifFolder(Gtk.Box):
 
     def get_output_path(self):
         output_folder_path = self.settings.get_string("output-folder")  # "" by default
-        output_final_folder = 'cleared'  # TODO not hardcode
+        output_final_folder = self.settings.get_string("folder-for-clean-photos")  # 'cleared' by default
 
         if self.props.same_folder:  # same where file was
             if output_folder_path == "":

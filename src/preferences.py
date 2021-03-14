@@ -26,12 +26,18 @@ class PreferencesWindow(Handy.PreferencesWindow):
     __gtype_name__ = "hdy_preferences_dialog"
 
     rename_entry = Gtk.Template.Child()
+    rename_folder_entry = Gtk.Template.Child()
 
     def __init__(self, app, *args, **kwargs):
         super().__init__(**kwargs)
         self.settings = Gio.Settings.new('com.github.Latesil.exif-remover')
         self.rename_entry.set_text(self.settings.get_string('output-filename'))
+        self.rename_folder_entry.set_text(self.settings.get_string('folder-for-clean-photos'))
 
     @Gtk.Template.Callback()
     def on_rename_entry_changed(self, entry):
         self.settings.set_string('output-filename', entry.get_text())
+
+    @Gtk.Template.Callback()
+    def on_rename_folder_entry_changed(self, entry):
+        self.settings.set_string('folder-for-clean-photos', entry.get_text())

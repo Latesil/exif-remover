@@ -6,6 +6,11 @@
           <summary>Output filename</summary>
           <description>Prefix for output files</description>
         </key>
+        <key type="s" name="folder-for-clean-photos">
+          <default>"cleared"</default>
+          <summary>Output folder name</summary>
+          <description>Final folder in selected path which will be contain all clear files</description>
+        </key>
         <key type="s" name="output-folder">
           <default>""</default>
           <summary>Output folder</summary>
