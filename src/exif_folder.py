@@ -139,7 +139,7 @@ class ExifFolder(Gtk.Box):
                     self.settings.set_boolean('done', True)
                     self._window.recent_folder = output_folder
         else:
-            print('There is no files to process')
+            print('There are no files to process')
             return
 
     @Gtk.Template.Callback()

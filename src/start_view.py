@@ -16,8 +16,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import gi
+
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, GObject
+
 
 @Gtk.Template(resource_path="/com/github/Latesil/exif-remover/ui/StartView.ui")
 class StartView(Gtk.Stack):

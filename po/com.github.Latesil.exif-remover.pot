@@ -1,0 +1,161 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-14 16:57+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../data/com.github.Latesil.exif-remover.desktop.in:3
+msgid "exif-remover"
+msgstr ""
+
+#: ../data/com.github.Latesil.exif-remover.desktop.in:4
+#: ../data/com.github.Latesil.exif-remover.appdata.xml.in:9
+msgid "Simple program for removing EXIF metadata from your photos"
+msgstr ""
+
+#: ../data/com.github.Latesil.exif-remover.appdata.xml.in:6
+#: ../data/ui/window.ui:78 ../data/ui/window.ui:93
+msgid "EXIF Remover"
+msgstr ""
+
+#: ../data/com.github.Latesil.exif-remover.appdata.xml.in:7
+msgid "Remove EXIF metadata from your photos"
+msgstr ""
+
+#: ../data/com.github.Latesil.exif-remover.appdata.xml.in:14
+msgid "Lateseal"
+msgstr ""
+
+#: ../data/com.github.Latesil.exif-remover.gschema.xml:6
+#: ../data/ui/preferences.ui:19
+msgid "Output filename"
+msgstr ""
+
+#: ../data/com.github.Latesil.exif-remover.gschema.xml:7
+msgid "Prefix for output files"
+msgstr ""
+
+#: ../data/com.github.Latesil.exif-remover.gschema.xml:11
+msgid "Output folder name"
+msgstr ""
+
+#: ../data/com.github.Latesil.exif-remover.gschema.xml:12
+msgid "Final folder in selected path which will be contain all clear files"
+msgstr ""
+
+#: ../data/com.github.Latesil.exif-remover.gschema.xml:16
+#: ../data/ui/preferences.ui:34
+msgid "Output folder"
+msgstr ""
+
+#: ../data/com.github.Latesil.exif-remover.gschema.xml:17
+msgid ""
+"Prefix for output folder. None by default means xdg-pictures/cleared folder."
+msgstr ""
+
+#: ../data/com.github.Latesil.exif-remover.gschema.xml:21
+msgid "Should files be renamed"
+msgstr ""
+
+#: ../data/com.github.Latesil.exif-remover.gschema.xml:22
+msgid ""
+"Determine whether files should be renamed. Renaming files is a process of "
+"adding quantity prefix at the end of the filename"
+msgstr ""
+
+#: ../data/com.github.Latesil.exif-remover.gschema.xml:26
+msgid "All done"
+msgstr ""
+
+#: ../data/com.github.Latesil.exif-remover.gschema.xml:27
+msgid "All metadata from all files are cleaned"
+msgstr ""
+
+#: ../data/ui/about_dialog.ui:11
+msgid "Program for removing Exif metadata from your photos"
+msgstr ""
+
+#: ../data/ui/ExifFolder.ui:42 ../data/ui/window.ui:208
+msgid "Open folder"
+msgstr ""
+
+#: ../data/ui/ExifFolder.ui:107
+msgid "Same Folder"
+msgstr ""
+
+#: ../data/ui/ExifFolder.ui:108
+msgid "Different Folder"
+msgstr ""
+
+#: ../data/ui/FilesView.ui:48
+msgid "Show only selected"
+msgstr ""
+
+#: ../data/ui/FilesView.ui:65
+msgid "Selected:"
+msgstr ""
+
+#: ../data/ui/folder_box.ui:18
+msgid "label"
+msgstr ""
+
+#: ../data/ui/folder_box.ui:30
+msgid "Remove EXIF"
+msgstr ""
+
+#: ../data/ui/preferences.ui:11 ../data/ui/window.ui:19
+msgid "Rename"
+msgstr ""
+
+#: ../data/ui/preferences.ui:15
+msgid "Output"
+msgstr ""
+
+#: ../data/ui/preferences.ui:20
+msgid "Filename of each cleared file"
+msgstr ""
+
+#: ../data/ui/preferences.ui:35
+msgid "Final output folder that will contain all cleared photos"
+msgstr ""
+
+#: ../data/ui/StartView.ui:39
+msgid "Click + to choose a folder"
+msgstr ""
+
+#: ../data/ui/window.ui:48
+msgid "Preferences"
+msgstr ""
+
+#: ../data/ui/window.ui:62
+msgid "About"
+msgstr ""
+
+#: ../data/ui/window.ui:101
+msgid "Add new"
+msgstr ""
+
+#: ../data/ui/window.ui:124
+msgid "Back"
+msgstr ""
+
+#: ../data/ui/window.ui:198
+msgid "Metadata cleaned"
+msgstr ""
+
+#: ../src/window.py:82 ../src/exif_folder.py:168
+msgid "Open Folder"
+msgstr ""

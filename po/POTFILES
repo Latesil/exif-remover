@@ -1,7 +1,16 @@
-data/com.github.Latesil.exif-remover.desktop.in
-data/com.github.Latesil.exif-remover.appdata.xml.in
-data/com.github.Latesil.exif-remover.gschema.xml
-src/window.ui
-src/main.py
-src/window.py
+../data/com.github.Latesil.exif-remover.desktop.in
+../data/com.github.Latesil.exif-remover.appdata.xml.in
+../data/com.github.Latesil.exif-remover.gschema.xml
+../data/ui/about_dialog.ui
+../data/ui/ExifFile.ui
+../data/ui/ExifFolder.ui
+../data/ui/FilesView.ui
+../data/ui/folder_box.ui
+../data/ui/FoldersView.ui
+../data/ui/preferences.ui
+../data/ui/StartView.ui
+../data/ui/window.ui
+../src/main.py
+../src/window.py
+../src/exif_folder.py
 
