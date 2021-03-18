@@ -129,6 +129,7 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
     @Gtk.Template.Callback()
     def on_about_button_clicked(self, button):
         about = AboutWindow(self)
+        about.set_logo_icon_name('com.github.Latesil.exif-remover')
         about.run()
         about.destroy()
 
