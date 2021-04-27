@@ -1,7 +1,7 @@
 {
     "app-id": "com.github.Latesil.exif-remover",
     "runtime": "org.gnome.Platform",
-    "runtime-version": "3.38",
+    "runtime-version": "40",
     "sdk": "org.gnome.Sdk",
     "command": "exif-remover",
     "finish-args": [
@@ -57,22 +57,6 @@
                     "type": "git",
                     "url": "https://gitlab.gnome.org/GNOME/gexiv2.git/",
                     "commit" : "e3046adf3029db6dd6f3dc7edab30b18ff7d7014"
-                }
-            ]
-        },
-        {
-            "name" : "libhandy",
-            "buildsystem" : "meson",
-            "config-opts": [
-                "-Dexamples=false",
-                "-Dglade_catalog=disabled",
-                "-Dtests=false",
-                "-Dvapi=false"
-            ],
-            "sources" : [
-                {
-                    "type" : "git",
-                    "url" : "https://gitlab.gnome.org/GNOME/libhandy.git"
                 }
             ]
         },
