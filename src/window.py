@@ -97,6 +97,7 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
     def on_back_button_clicked(self, button):
         current_view = self.main_stack.get_visible_child()  # current_view = files_view
         selected_photos = current_view.files_view_container.get_selected_children()
+        button.props.visible = False
         if selected_photos:  # and check if photos exist
             folder_view = self.main_stack.get_child_by_name('foldersview')
             for child in folder_view.folders_view_container.get_children():  # search in open folders
