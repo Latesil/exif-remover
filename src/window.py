@@ -27,6 +27,7 @@ from .start_view import StartView
 from .folders_view import FoldersView
 from .exif_folder import ExifFolder
 from .files_view import FilesView
+from .file_box import FileBox
 from .AboutDialog import AboutWindow
 from .preferences import PreferencesWindow
 
@@ -162,6 +163,9 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
                     self.main_stack.set_visible_child_name("foldersview")
                     self.folders_view.add_folder_to_view(new_box)
             else:
-                raise GLib.Error(message=f'Error: {folder_path} is not a folder or it is not accessible')
+                new_box = FileBox(self._app, path=folder_path)
+                if self.props.active_view.get_name() != 'FoldersView':
+                    self.main_stack.set_visible_child_name("foldersview")
+                    self.folders_view.add_folder_to_view(new_box)
         except GLib.Error as err:
             print('%s' % err.message)
