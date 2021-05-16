@@ -58,6 +58,7 @@ class FileBox(Gtk.Box):
         self.path = self.props.path
         self.custom_path_set = False
         self.exif_file_label.props.label = self.path
+        self.parent_folder = GLib.path_get_dirname(self.path)
         self.allowed_files = ['jpg', 'png', 'jpeg']
 
     @Gtk.Template.Callback()
@@ -83,7 +84,30 @@ class FileBox(Gtk.Box):
 
     @Gtk.Template.Callback()
     def on_clear_exif_file_clicked(self, button):
-        print("on_clear_exif_file_clicked")
+        output_folder = self.get_output_path()
+        input_file = Gio.File.new_for_path(self.path)
+        name = self.get_output_filename(output_folder)
+
+        print("output folder", output_folder)
+        print("name", name)
+
+        output_file = Gio.File.new_for_path(
+            GLib.build_pathv(
+                GLib.DIR_SEPARATOR_S, [
+                    output_folder,
+                    name
+                ]
+            )
+        )
+
+        try:
+            input_file.copy(output_file, Gio.FileCopyFlags.NONE)
+        except GLib.Error as err:
+            if err.code == 2:  # file exists
+                print('skipped: ', output_file.get_path())
+            else:
+                print(err.domain, ':', err.message, 'code:', err.code)
+                return
 
     @Gtk.Template.Callback()
     def on_change_file_output_box_changed(self, box):
@@ -139,7 +163,7 @@ class FileBox(Gtk.Box):
         if self.props.same_folder:  # same where file was
             if output_folder_path == "":
                 output_folder_path = GLib.build_pathv(GLib.DIR_SEPARATOR_S, [
-                    self.path, output_final_folder
+                    self.parent_folder, output_final_folder
                 ])
         else:
             if output_folder_path == "":
@@ -156,12 +180,12 @@ class FileBox(Gtk.Box):
 
         return output_folder_path
 
-    def get_output_filename(self, file, n):
+    def get_output_filename(self, file, n=1):
         if self.settings.get_boolean('rename'):
             if self.settings.get_string("output-filename") == "":
                 self.settings.reset('output-filename')
             name = self.settings.get_string('output-filename') + "_" + str(n)
         else:
-            name = file.get_basename()
+            name = GLib.path_get_basename(self.path)
 
         return name
