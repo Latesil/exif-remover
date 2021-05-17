@@ -86,7 +86,7 @@ class ExifRemoverWindow(Handy.ApplicationWindow):
         response = chooser.run()
         if response == Gtk.ResponseType.ACCEPT:
             path = chooser.get_filename()
-            new_box = ExifFolder(self._app, path=path)
+            new_box = FileBox(self._app, path=path)
             if self.props.active_view.get_name() != 'FoldersView':
                 self.main_stack.set_visible_child_name("foldersview")
                 self.folders_view.add_folder_to_view(new_box)
