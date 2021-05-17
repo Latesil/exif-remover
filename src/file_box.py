@@ -88,9 +88,6 @@ class FileBox(Gtk.Box):
         input_file = Gio.File.new_for_path(self.path)
         name = self.get_output_filename(output_folder)
 
-        print("output folder", output_folder)
-        print("name", name)
-
         output_file = Gio.File.new_for_path(
             GLib.build_pathv(
                 GLib.DIR_SEPARATOR_S, [
@@ -149,11 +146,7 @@ class FileBox(Gtk.Box):
         self.change_output_label.props.label = '/new/output/folder'
         self.custom_path_set = False
 
-    def clean_file_metadata(self, input, output):
-        GLib.idle_add(self.trigger_metadata_clean, input, output)
-        time.sleep(0.2)  # need this for some reason
-
-    def trigger_metadata_clean(self, i, o):
+    def clean_file_metadata(self, i, o):
         clear_metadata(i, o)
 
     def get_output_path(self):

@@ -71,6 +71,50 @@
       </object>
     </child>
   </object>
+  <object class="GtkPopover" id="open_popover">
+    <property name="can_focus">False</property>
+    <property name="relative_to">add_button</property>
+    <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="margin_left">10</property>
+        <property name="margin_right">10</property>
+        <property name="margin_top">10</property>
+        <property name="margin_bottom">10</property>
+        <property name="orientation">vertical</property>
+        <property name="homogeneous">False</property>
+        <child>
+          <object class="GtkModelButton" id="open_file_button">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="text" translatable="yes">Add File</property>
+            <signal name="clicked" handler="on_open_file_button_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkModelButton" id="open_folder_button">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="text" translatable="yes">Add Folder</property>
+            <signal name="clicked" handler="on_open_folder_button_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
   <template class="ExifRemoverWindow" parent="HdyApplicationWindow">
     <property name="can_focus">False</property>
     <property name="default_width">800</property>
@@ -93,11 +137,12 @@
                 <property name="title" translatable="yes">EXIF Remover</property>
                 <property name="show_close_button">True</property>
                 <child>
-                  <object class="GtkButton" id="add_button">
+                  <object class="GtkMenuButton" id="add_button">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="halign">center</property>
                     <property name="valign">center</property>
+                    <property name="popover">open_popover</property>
                     <property name="tooltip_text" translatable="yes">Add new</property>
                     <signal name="clicked" handler="on_add_button_clicked" swapped="no"/>
                     <child>
